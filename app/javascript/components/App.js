@@ -12,6 +12,9 @@ const App = () => {
       <Route exact path="/decks/:id">
         <Deck />
       </Route>
+      <Route exact path="/decks">
+        <Decks />
+      </Route>
     </Switch>
   );
 };
