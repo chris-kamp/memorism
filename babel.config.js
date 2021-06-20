@@ -57,6 +57,8 @@ module.exports = function(api) {
           loose: true
         }
       ],
+      // Added to prevent warning
+      ["@babel/plugin-proposal-private-methods", { "loose": true }]
       [
         '@babel/plugin-proposal-object-rest-spread',
         {
