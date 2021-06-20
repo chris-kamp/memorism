@@ -46,7 +46,7 @@ module.exports = function(api) {
       ]
     ].filter(Boolean),
     plugins: [
-      'react-hot-loader/babel',
+      isDevelopmentEnv && 'react-hot-loader/babel',
       'babel-plugin-macros',
       '@babel/plugin-syntax-dynamic-import',
       isTestEnv && 'babel-plugin-dynamic-import-node',

@@ -58,3 +58,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "devise", "~> 4.8"
 
 gem "jsonapi-serializer", "~> 2.2"
+
+gem 'webpacker-react', "~> 1.0.0.beta.1"
