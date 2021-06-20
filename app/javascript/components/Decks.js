@@ -76,8 +76,8 @@ const Decks = () => {
           ))}
         </ul>
       )}
-      <button onClick={handleSubmitAdd}>Add a deck</button>
-      <button onClick={handleSubmitEdit}>Edit the first deck</button>
+      <button onClick={handleSubmitAdd}>Add a deck!</button>
+      <button onClick={handleSubmitEdit}>Edit the first deck!</button>
       <button onClick={handleSubmitRemove}>Remove the first deck</button>
     </>
   );
