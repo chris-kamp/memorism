@@ -1,2 +1,2 @@
 <%= javascript_pack_tag 'index' %>
-<%= react_component("App") %>
+<%= react_component("App", {user: current_user.to_json, logoutPath: destroy_user_session_path.to_json}) %>

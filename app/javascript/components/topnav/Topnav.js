@@ -1,12 +1,15 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
-import Form from "react-bootstrap/Form"
-import FormControl from "react-bootstrap/FormControl"
-import Button from "react-bootstrap/Button"
 import { LinkContainer } from 'react-router-bootstrap'
 
-const Topnav = () => {
+const Topnav = ({user: userObj}) => {
+  const [user, setUser] = useState("null");
+
+  useEffect(() => {
+    setUser(JSON.parse(userObj));
+  }, userObj)
+
   return (
     <>
       <Navbar expand="lg" bg="dark" variant="dark">
@@ -16,6 +19,10 @@ const Topnav = () => {
           <Nav className="mr-auto">
             <LinkContainer to="/decks"><Nav.Link>Home</Nav.Link></LinkContainer>
             <Nav.Link href="/users/sign_in">Log In</Nav.Link>
+          </Nav>
+          <Nav>
+            <Navbar.Text>{user === null ? "" : user.username}</Navbar.Text>
+            <Nav.Link href="/users/sign_out" data-method="delete">Log Out</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

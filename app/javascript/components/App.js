@@ -6,11 +6,11 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Topnav from "./topnav/Topnav";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const App = () => {
+const App = ({user}) => {
   return (
     <>
       <Router>
-        <Topnav />
+        <Topnav user={user} />
         <Switch>
           <Route exact path="/">
             <Decks />
