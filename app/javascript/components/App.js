@@ -1,5 +1,5 @@
 import React from "react";
-import Deck from "./Deck";
+import Deck from "./deck/Deck";
 import Decks from "./Decks";
 import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
