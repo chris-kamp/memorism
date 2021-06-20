@@ -5,7 +5,8 @@ module Api
 
     def index
       @decks = Deck.all
-      render json: DeckSerializer.new(@decks, @options).serializable_hash.to_json
+      render json:
+               DeckSerializer.new(@decks, @options).serializable_hash.to_json
     end
 
     def show
@@ -27,18 +28,27 @@ module Api
     end
 
     def update
-      if @deck.update(deck_params)
-        render json: DeckSerializer.new(@deck, @options).serializable_hash.to_json
+      if user_signed_in?
+        if @deck.update(deck_params)
+          render json:
+                   DeckSerializer.new(@deck, @options).serializable_hash.to_json
+        else
+          render json: { error: @deck.errors.messages }, status: 422
+        end
       else
-        render json: { error: @deck.errors.messages }, status: 422
+        render json: {}, status: 401
       end
     end
 
     def destroy
-      if @deck.destroy
-        head :no_content
+      if user_signed_in?
+        if @deck.destroy
+          head :no_content
+        else
+          render json: { error: @deck.errors.messages }, status: 422
+        end
       else
-        render json: { error: @deck.errors.messages }, status: 422
+        render json: {}, status: 401
       end
     end
 
