@@ -80,6 +80,11 @@ const Decks = () => {
       .catch((error) => console.log(error));
   };
 
+  // 
+  const handleDeleteCard = () => {
+
+  }
+
   return (
     <>
       {loaded && (

@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const Card = ({ id }) => {
+const Card = ({ id, deleteCard }) => {
   const [cardData, setCardData] = useState(null);
   const [loaded, setLoaded] = useState(false);
 
@@ -22,12 +22,17 @@ const Card = ({ id }) => {
     };
   }, [id]);
 
+  // Handle deletion by calling deleteCard from parent, passing in own id
+  const handleDelete = () => deleteCard(id);
+
+
   return (
     <>
       {/* Render card details only when data has been returned by the axios request */}
       {loaded && (
-        <div>
+        <div onDoubleClick={handleDelete}>
           <h5>Card {id}</h5>
+          <span>(Double click to delete me!)</span>
           <ul>
             <li>Front: {cardData.attributes.front}</li>
             <li>Back: {cardData.attributes.back}</li>

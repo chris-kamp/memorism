@@ -27,8 +27,22 @@ const Deck = () => {
       .catch((error) => console.log(error));
   }, [id, cardIds.length]);
 
+  // Send request to delete a card from the database, and remove the card
+  // from state if successful
+  const deleteCard = (deletionId) => {
+    // Get CSRF token and send in header
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
+    // Send delete request with the id of the relevant card
+    axios
+    .delete(`/api/cards/${deletionId}`)
+    .then(() => setCardIds(cardIds.filter(cardId => cardId !== deletionId)))
+    .catch(error => console.log(error))
+  }
+  
   // Map card ids to Card components for rendering
-  const cardsList = cardIds.map((cardId) => (<Card id={cardId} key={cardId} />)
+  const cardsList = cardIds.map((cardId) => (<Card id={cardId} key={cardId} deleteCard={deleteCard} />)
   )
 
   return (
