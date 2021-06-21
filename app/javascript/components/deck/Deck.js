@@ -27,6 +27,10 @@ const Deck = () => {
       .catch((error) => console.log(error));
   }, [id, cardIds.length]);
 
+  // Map card ids to Card components for rendering
+  const cardsList = cardIds.map((cardId) => (<Card id={cardId} key={cardId} />)
+  )
+
   return (
     <div>
       {isEmpty(deck) ? (<p>Deck with id {id} does not exist or could not be accessed</p>) : (<><h1>{deck.title}</h1>
@@ -34,9 +38,7 @@ const Deck = () => {
       <p>{deck.description}</p>
       <h3>Cards:</h3>
       <div>
-        {cardIds.length === 0 ? (<p>Deck is currently empty</p>) : (
-          cardIds.map((cardId) => (<Card id={cardId} key={cardId} />))
-        )}
+        {cardIds.length === 0 ? (<p>Deck is currently empty</p>) : cardsList}
       </div></>)}
     </div>
   );
