@@ -7,19 +7,27 @@ module Api
     end
 
     def create
-      @card = Card.new(card_params)
-      if @card.save
-        render json: CardSerializer.new(@card).serializable_hash.to_json
+      if user_signed_in?
+        @card = Card.new(card_params)
+        if @card.save
+          render json: CardSerializer.new(@card).serializable_hash.to_json
+        else
+          render json: { error: @card.errors.messages }, status: 422
+        end
       else
-        render json: { error: @card.errors.messages }, status: 422
+        render json: {}, status: 401
       end
     end
 
     def destroy
-      if @card.destroy
-        head :no_content
+      if user_signed_in?
+        if @card.destroy
+          head :no_content
+        else
+          render json: { error: @card.errors.messages }, status: 422
+        end
       else
-        render json: { error: @card.errors.messages }, status: 422
+        render json: {}, status: 401
       end
     end
 
