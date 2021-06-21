@@ -1,19 +1,29 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 
 const Decks = () => {
   const [decks, setDecks] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
+  // Get data for all decks, and update state accordingly
   useEffect(() => {
+    let mounted = true;
     axios
       .get("/api/decks")
       .then((response) => {
-        setDecks(response.data.data);
-        setLoaded(true);
+        // Update state only if component is mounted
+        if (mounted) {
+          setDecks(response.data.data);
+          setLoaded(true);
+        }
       })
       .catch((error) => console.log(error));
+    // Set mounted to false when component unmounted
+
+    return () => {
+      mounted = false;
+    };
   }, [decks.length]);
 
   const handleSubmitAdd = () => {
@@ -42,7 +52,9 @@ const Decks = () => {
         console.log(response);
         setDecks(
           decks.map((deck) => {
-            return deck.id === response.data.data.id ? response.data.data : deck;
+            return deck.id === response.data.data.id
+              ? response.data.data
+              : deck;
           })
         );
       })
@@ -73,7 +85,9 @@ const Decks = () => {
       {loaded && (
         <ul>
           {decks.map((deck) => (
-            <li key={deck.id}><Link to={`/decks/${deck.id}`}>{deck.attributes.title}</Link></li>
+            <li key={deck.id}>
+              <Link to={`/decks/${deck.id}`}>{deck.attributes.title}</Link>
+            </li>
           ))}
         </ul>
       )}

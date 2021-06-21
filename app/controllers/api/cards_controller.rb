@@ -1,6 +1,10 @@
 module Api
   class CardsController < ApplicationController
-    before_action :get_card, only: %i[destroy]
+    before_action :get_card, only: %i[destroy show]
+
+    def show
+      render json: CardSerializer.new(@card).serializable_hash.to_json
+    end
 
     def create
       @card = Card.new(card_params)

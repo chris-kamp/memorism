@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import Card from "../card/Card";
 
 const Deck = () => {
   // Get deck id from URL params using a react-router-dom method
@@ -32,11 +33,11 @@ const Deck = () => {
       <p className="font-weight-bold">{deck.public ? "(Public)" : "(Private)"}</p>
       <p>{deck.description}</p>
       <h3>Cards:</h3>
-      <ul>
-        {cardIds.length === 0 ? (<li>Deck is currently empty</li>) : (
-          cardIds.map((cardId) => (<li key={cardId}>Card {cardId}</li>))
+      <div>
+        {cardIds.length === 0 ? (<p>Deck is currently empty</p>) : (
+          cardIds.map((cardId) => (<Card id={cardId} key={cardId} />))
         )}
-      </ul></>)}
+      </div></>)}
     </div>
   );
 };

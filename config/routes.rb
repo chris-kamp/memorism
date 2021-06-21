@@ -8,7 +8,7 @@ Rails
 
     namespace :api do
       resources :decks
-      resources :cards, only: %i[create destroy]
+      resources :cards, only: %i[create destroy show]
     end
 
     get '*path', to: 'pages#index'
