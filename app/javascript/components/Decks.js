@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {Link} from "react-router-dom"
 
 const Decks = () => {
   const [decks, setDecks] = useState([]);
@@ -72,7 +73,7 @@ const Decks = () => {
       {loaded && (
         <ul>
           {decks.map((deck) => (
-            <li key={deck.id}>{deck.attributes.title}</li>
+            <li key={deck.id}><Link to={`/decks/${deck.id}`}>{deck.attributes.title}</Link></li>
           ))}
         </ul>
       )}
