@@ -27,14 +27,14 @@ const Decks = () => {
     };
   }, [decks.length]);
 
-  const createDeck = ({title, description, isPublic}) => {
+  const createDeck = ({ title, description, isPublic }) => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .post("/api/decks", {
         title,
         description,
-        public: isPublic
+        public: isPublic,
       })
       .then((response) => {
         console.log(response);
@@ -81,16 +81,28 @@ const Decks = () => {
   };
 
   // react-hook-form setup
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   return (
     <>
       {loaded && (
-        <ul style={{width: "max-content"}}>
+        <ul style={{ width: "max-content" }}>
           {decks.map((deck) => (
-            <li key={deck.id} style={{display: "flex", justifyContent: "space-between"}}>
+            <li
+              key={deck.id}
+              style={{ display: "flex", justifyContent: "space-between" }}
+            >
               <Link to={`/decks/${deck.id}`}>{deck.attributes.title}</Link>
-              <button style={{marginLeft: "1rem"}} onClick={() => removeDeck(deck.id)}>X</button>
+              <button
+                style={{ marginLeft: "1rem" }}
+                onClick={() => removeDeck(deck.id)}
+              >
+                X
+              </button>
             </li>
           ))}
         </ul>
@@ -99,18 +111,38 @@ const Decks = () => {
       <h2>New Deck</h2>
       <form onSubmit={handleSubmit((data) => createDeck(data))}>
         <label htmlFor="title">Title</label>
-        <input id="title" {...register("title", {required: true })} />
+        <input id="title" {...register("title", { required: true })} />
         <br />
-        {errors.title && <span style={{color: "red"}}>Please provide a title</span>}
+        {errors.title && (
+          <span style={{ color: "red" }}>Please provide a title</span>
+        )}
         <br />
         <label htmlFor="description">Description</label>
-        <input id="description" {...register("description", {required: true })} />
+        <input
+          id="description"
+          {...register("description", { required: true })}
+        />
         <br />
-        {errors.description && <span style={{color: "red"}}>Please provide a description</span>}
+        {errors.description && (
+          <span style={{ color: "red" }}>Please provide a description</span>
+        )}
         <br />
-        <input type="radio" id="public-true" value="true" {...register("isPublic", {required: true})} />
+        <input
+          type="radio"
+          id="public-true"
+          value="true"
+          {...register("isPublic", { required: true })}
+          style={{ margin: "0 0.25rem" }}
+        />
         <label htmlFor="public-true">Public</label>
-        <input type="radio" id="public-false" value="false" defaultChecked {...register("isPublic", {required: true})} />
+        <input
+          type="radio"
+          id="public-false"
+          value="false"
+          defaultChecked
+          {...register("isPublic", { required: true })}
+          style={{ margin: "0 0.25rem" }}
+        />
         <label htmlFor="public-false">Private</label>
         <br />
         <input type="submit" value="Create" />
