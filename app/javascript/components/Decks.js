@@ -27,7 +27,7 @@ const Decks = () => {
     };
   }, [decks.length]);
 
-  const handleCreate = ({title, description, isPublic}) => {
+  const createDeck = ({title, description, isPublic}) => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
@@ -98,15 +98,22 @@ const Decks = () => {
       <button onClick={handleSubmitEdit}>Edit the first deck!</button>
       <button onClick={handleSubmitRemove}>Remove the first deck</button>
       <h2>New Deck</h2>
-      <form onSubmit={handleSubmit((data) => handleCreate(data))}>
+      <form onSubmit={handleSubmit((data) => createDeck(data))}>
         <label htmlFor="title">Title</label>
         <input id="title" {...register("title", {required: true })} />
+        <br />
+        {errors.title && <span style={{color: "red"}}>Please provide a title</span>}
+        <br />
         <label htmlFor="description">Description</label>
         <input id="description" {...register("description", {required: true })} />
-        <label htmlFor="public-true">Public</label>
+        <br />
+        {errors.description && <span style={{color: "red"}}>Please provide a description</span>}
+        <br />
         <input type="radio" id="public-true" value="true" {...register("isPublic", {required: true})} />
+        <label htmlFor="public-true">Public</label>
+        <input type="radio" id="public-false" value="false" defaultChecked {...register("isPublic", {required: true})} />
         <label htmlFor="public-false">Private</label>
-        <input type="radio" id="public-false" value="false" {...register("isPublic", {required: true})} />
+        <br />
         <input type="submit" value="Create" />
       </form>
     </>
