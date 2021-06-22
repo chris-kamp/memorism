@@ -1,6 +1,6 @@
 import React from "react";
 
-const CardDetails = ({id, cardData, deleteCard, toggleEditable}) => {
+const CardDetails = ({ id, cardData, deleteCard, toggleEditable }) => {
   return (
     <>
       <div>
@@ -9,13 +9,13 @@ const CardDetails = ({id, cardData, deleteCard, toggleEditable}) => {
       </div>
       <button
         type="button"
-        onClick={() => deleteCard(id)}
+        onClick={toggleEditable}
         style={{ marginRight: "0.5rem" }}
       >
-        Delete
-      </button>
-      <button type="button" onClick={toggleEditable}>
         Edit
+      </button>
+      <button type="button" onClick={() => deleteCard(id)}>
+        Delete
       </button>
     </>
   );

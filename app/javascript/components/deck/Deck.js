@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../card/Card";
+import NewCardForm from "../card/NewCardForm";
 import DeckDetails from "./DeckDetails";
 import DeckForm from "./DeckForm";
 
@@ -14,6 +15,8 @@ const Deck = () => {
   const [cardIds, setCardIds] = useState([]);
   // Track whether deck details are being edited, initially false
   const [editable, setEditable] = useState(false);
+  // Track whether a new card is being created, initially false
+  const [addingCard, setAddingCard] = useState(false);
 
   // Helper function to check if object is empty
   const isEmpty = (obj) => Object.keys(obj).length === 0;
@@ -47,15 +50,39 @@ const Deck = () => {
       .catch((error) => console.log(error));
   };
 
+  // Attempt to create a new card in the relevant deck,
+  // and add it to state if successful
+  const createCard = ({ front, back }) => {
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+    axios
+      .post("/api/cards", {
+        front,
+        back,
+        deck_id: id,
+      })
+      .then((response) => {
+        setCardIds([...cardIds, response.data.data.id]);
+        toggleAddingCard();
+      })
+      .catch((error) => console.log(error));
+  };
+
   // Map card ids to Card components for rendering
+  // For now, reverse so newest is first when adding cards
   const cardsList = cardIds.map((cardId) => (
     <Card id={cardId} key={cardId} deleteCard={deleteCard} />
-  ));
+  )).reverse();
 
   // Toggle whether deck is being edited
   const toggleEditable = () => {
     setEditable(!editable);
-  }
+  };
+
+  // Toggle whether a new card is being added (and the new card form is shown)
+  const toggleAddingCard = () => {
+    setAddingCard(!addingCard);
+  };
 
   // Attempt to edit deck details
   const editDeck = ({ title, description, isPublic }) => {
@@ -77,8 +104,41 @@ const Deck = () => {
       ) : (
         <>
           {/* Render deck details display or edit form depending on whether deck is currently being edited */}
-          {editable ? <DeckForm deck={deck} toggleEditable={toggleEditable} editDeck={editDeck} /> : <DeckDetails deck={deck} toggleEditable={toggleEditable} />}
+          {editable ? (
+            <DeckForm
+              deck={deck}
+              toggleEditable={toggleEditable}
+              editDeck={editDeck}
+            />
+          ) : (
+            <DeckDetails deck={deck} toggleEditable={toggleEditable} />
+          )}
           <h3>Cards:</h3>
+          <button
+            type="button"
+            onClick={toggleAddingCard}
+            style={{ marginBottom: "0.5rem" }}
+          >
+            Add a Card
+          </button>
+
+          {addingCard && (
+            <>
+              <div
+                style={{
+                  border: "solid 2px blue",
+                  marginBottom: "0.5rem",
+                  padding: "0.25rem",
+                }}
+              >
+                <h5>New Card</h5>
+                <NewCardForm
+                  toggleAddingCard={toggleAddingCard}
+                  createCard={createCard}
+                />
+              </div>
+            </>
+          )}
           <div>
             {cardIds.length === 0 ? <p>Deck is currently empty</p> : cardsList}
           </div>
