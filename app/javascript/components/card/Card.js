@@ -22,21 +22,17 @@ const Card = ({ id, deleteCard }) => {
     };
   }, [id]);
 
-  // Handle deletion by calling deleteCard from parent, passing in own id
-  const handleDelete = () => deleteCard(id);
-
-
   return (
     <>
       {/* Render card details only when data has been returned by the axios request */}
       {loaded && (
-        <div onDoubleClick={handleDelete}>
+        <div style={{border: "solid 2px blue", marginBottom: "0.5rem"}}>
           <h5>Card {id}</h5>
-          <span>(Double click to delete me!)</span>
           <ul>
             <li>Front: {cardData.attributes.front}</li>
             <li>Back: {cardData.attributes.back}</li>
           </ul>
+          <button type="button" onClick={() => deleteCard(id)}>Delete</button>
         </div>
       )}
     </>
