@@ -44,24 +44,6 @@ const Decks = () => {
       .catch((error) => console.log(error));
   };
 
-  const handleSubmitEdit = () => {
-    const csrfToken = document.querySelector("[name=csrf-token]").content;
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-    axios
-      .patch(`/api/decks/${decks[0].id}`, { title: "I'm a changed title" })
-      .then((response) => {
-        console.log(response);
-        setDecks(
-          decks.map((deck) => {
-            return deck.id === response.data.data.id
-              ? response.data.data
-              : deck;
-          })
-        );
-      })
-      .catch((error) => console.log(error));
-  };
-
   const removeDeck = (id) => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
@@ -89,10 +71,11 @@ const Decks = () => {
 
   return (
     <>
+      <h1>Decks</h1>
       {loaded && (
-        <ul style={{ width: "max-content" }}>
+        <div style={{ width: "max-content" }}>
           {decks.map((deck) => (
-            <li
+            <p
               key={deck.id}
               style={{ display: "flex", justifyContent: "space-between" }}
             >
@@ -103,11 +86,10 @@ const Decks = () => {
               >
                 X
               </button>
-            </li>
+            </p>
           ))}
-        </ul>
+        </div>
       )}
-      <button onClick={handleSubmitEdit}>Edit the first deck!</button>
       <h2>New Deck</h2>
       <form onSubmit={handleSubmit((data) => createDeck(data))}>
         <label htmlFor="title">Title</label>

@@ -11,17 +11,19 @@ const App = ({user}) => {
     <>
       <Router>
         <Topnav user={user} />
-        <Switch>
-          <Route exact path="/">
-            <Decks />
-          </Route>
-          <Route exact path="/decks/:id">
-            <Deck />
-          </Route>
-          <Route exact path="/decks">
-            <Decks />
-          </Route>
-        </Switch>
+        <main style={{padding: "0.5rem"}}>
+          <Switch>
+            <Route exact path="/">
+              <Decks />
+            </Route>
+            <Route exact path="/decks/:id">
+              <Deck />
+            </Route>
+            <Route exact path="/decks">
+              <Decks />
+            </Route>
+          </Switch>
+        </main>
       </Router>
     </>
   );
