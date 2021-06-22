@@ -62,16 +62,15 @@ const Decks = () => {
       .catch((error) => console.log(error));
   };
 
-  const handleSubmitRemove = () => {
+  const removeDeck = (id) => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
-      .delete(`/api/decks/${decks[0].id}`)
-      .then((response) => {
-        console.log(`Delete response: ${response}`);
+      .delete(`/api/decks/${id}`)
+      .then(() => {
         setDecks(
           decks.reduce((arr, deck) => {
-            if (deck.id !== decks[0].id) {
+            if (deck.id !== id) {
               arr.push(deck);
             }
             return arr;
@@ -87,16 +86,16 @@ const Decks = () => {
   return (
     <>
       {loaded && (
-        <ul>
+        <ul style={{width: "max-content"}}>
           {decks.map((deck) => (
-            <li key={deck.id}>
+            <li key={deck.id} style={{display: "flex", justifyContent: "space-between"}}>
               <Link to={`/decks/${deck.id}`}>{deck.attributes.title}</Link>
+              <button style={{marginLeft: "1rem"}} onClick={() => removeDeck(deck.id)}>X</button>
             </li>
           ))}
         </ul>
       )}
       <button onClick={handleSubmitEdit}>Edit the first deck!</button>
-      <button onClick={handleSubmitRemove}>Remove the first deck</button>
       <h2>New Deck</h2>
       <form onSubmit={handleSubmit((data) => createDeck(data))}>
         <label htmlFor="title">Title</label>
