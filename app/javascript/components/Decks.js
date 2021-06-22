@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 const Decks = () => {
@@ -26,14 +27,14 @@ const Decks = () => {
     };
   }, [decks.length]);
 
-  const handleSubmitAdd = () => {
+  const handleCreate = ({title, description, isPublic}) => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .post("/api/decks", {
-        title: "New Deck",
-        description: "This is the new description",
-        public: true,
+        title,
+        description,
+        public: isPublic
       })
       .then((response) => {
         console.log(response);
@@ -80,10 +81,8 @@ const Decks = () => {
       .catch((error) => console.log(error));
   };
 
-  // 
-  const handleDeleteCard = () => {
-
-  }
+  // react-hook-form setup
+  const { register, handleSubmit, formState: { errors } } = useForm();
 
   return (
     <>
@@ -96,9 +95,20 @@ const Decks = () => {
           ))}
         </ul>
       )}
-      <button onClick={handleSubmitAdd}>Add a deck!</button>
       <button onClick={handleSubmitEdit}>Edit the first deck!</button>
       <button onClick={handleSubmitRemove}>Remove the first deck</button>
+      <h2>New Deck</h2>
+      <form onSubmit={handleSubmit((data) => handleCreate(data))}>
+        <label htmlFor="title">Title</label>
+        <input id="title" {...register("title", {required: true })} />
+        <label htmlFor="description">Description</label>
+        <input id="description" {...register("description", {required: true })} />
+        <label htmlFor="public-true">Public</label>
+        <input type="radio" id="public-true" value="true" {...register("isPublic", {required: true})} />
+        <label htmlFor="public-false">Private</label>
+        <input type="radio" id="public-false" value="false" {...register("isPublic", {required: true})} />
+        <input type="submit" value="Create" />
+      </form>
     </>
   );
 };
