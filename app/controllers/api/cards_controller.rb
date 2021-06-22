@@ -1,6 +1,6 @@
 module Api
   class CardsController < ApplicationController
-    before_action :get_card, only: %i[destroy show]
+    before_action :get_card, only: %i[destroy show update]
 
     def show
       render json: CardSerializer.new(@card).serializable_hash.to_json
@@ -23,6 +23,19 @@ module Api
       if user_signed_in?
         if @card.destroy
           head :no_content
+        else
+          render json: { error: @card.errors.messages }, status: 422
+        end
+      else
+        render json: {}, status: 401
+      end
+    end
+
+    def update
+      if user_signed_in?
+        if @card.update(card_params)
+          render json:
+                   CardSerializer.new(@card).serializable_hash.to_json
         else
           render json: { error: @card.errors.messages }, status: 422
         end
