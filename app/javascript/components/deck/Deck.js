@@ -57,6 +57,19 @@ const Deck = () => {
     setEditable(!editable);
   }
 
+  // Attempt to edit deck details
+  const editDeck = ({ title, description, isPublic }) => {
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+    axios
+      .put(`/api/decks/${id}`, { title, description, public: isPublic })
+      .then((response) => {
+        toggleEditable();
+        setDeck(response.data.data.attributes);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <div>
       {isEmpty(deck) ? (
@@ -64,7 +77,7 @@ const Deck = () => {
       ) : (
         <>
           {/* Render deck details display or edit form depending on whether deck is currently being edited */}
-          {editable ? <DeckForm deck={deck} toggleEditable={toggleEditable} /> : <DeckDetails deck={deck} toggleEditable={toggleEditable} />}
+          {editable ? <DeckForm deck={deck} toggleEditable={toggleEditable} editDeck={editDeck} /> : <DeckDetails deck={deck} toggleEditable={toggleEditable} />}
           <h3>Cards:</h3>
           <div>
             {cardIds.length === 0 ? <p>Deck is currently empty</p> : cardsList}

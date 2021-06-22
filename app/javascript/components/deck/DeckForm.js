@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const DeckForm = ({ deck, toggleEditable }) => {
+const DeckForm = ({ deck, toggleEditable, editDeck }) => {
   // react-hook-form setup
   const {
     register,
@@ -10,7 +10,7 @@ const DeckForm = ({ deck, toggleEditable }) => {
   } = useForm();
 
   return (
-    <form onSubmit={handleSubmit((data) => console.log(data))}>
+    <form onSubmit={handleSubmit((data) => editDeck(data))}>
       <input
         id="title"
         defaultValue={deck.title}
