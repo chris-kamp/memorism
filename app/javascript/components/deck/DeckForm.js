@@ -48,7 +48,7 @@ const DeckForm = ({ deck, toggleEditable, editDeck }) => {
       />
       <br />
       {errors.description && (
-        <span style={{ color: "red" }}>Please provide a description</span>
+        <span style={{ color: "red" }}>Description cannot be empty</span>
       )}
       <br />
       <input type="submit" value="Confirm" />
