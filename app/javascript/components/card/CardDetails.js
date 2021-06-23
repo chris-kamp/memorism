@@ -37,7 +37,7 @@ top: 0px;
 const Button = styled.button`
   border: none;
   text-align: center;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
   font-weight: bold;
   color: #FDFDFF;
   height: 1.7rem;
