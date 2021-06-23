@@ -4,7 +4,7 @@ import Decks from "./Decks";
 import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Topnav from "./topnav/Topnav";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "../styles/style.css";
 
 const App = ({user}) => {
   return (
