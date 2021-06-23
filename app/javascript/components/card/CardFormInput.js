@@ -5,13 +5,13 @@ const Input = styled.input`
   width: 100%;
 `
 
-const CardFormInput = ({side, cardData, register, errors}) => {
+const CardFormInput = ({side, cardData, register, errors, formId}) => {
   return (
     <>
       <Input
         defaultValue={cardData.attributes[side]}
         {...register(side, { required: true })}
-        form="editCardForm"
+        form={formId}
       />
       <br />
       {errors.back && (

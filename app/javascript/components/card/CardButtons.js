@@ -32,7 +32,7 @@ const GreenButton = styled(LeftButton)`
   background-color: green;
 `;
 
-const CardButtons = ({ editable, toggleEditable, deleteCard, id }) => {
+const CardButtons = ({ editable, handleToggle, deleteCard, id, formId }) => {
   return (
     <ButtonContainer>
       {editable ? (
@@ -41,15 +41,15 @@ const CardButtons = ({ editable, toggleEditable, deleteCard, id }) => {
             as="input"
             type="submit"
             value="Confirm"
-            form="editCardForm"
+            form={formId}
           />
-          <RedButton type="button" onClick={toggleEditable}>
+          <RedButton type="button" onClick={handleToggle}>
             Cancel
           </RedButton>
         </>
       ) : (
         <>
-          <YellowButton type="button" onClick={toggleEditable}>
+          <YellowButton type="button" onClick={handleToggle}>
             Edit
           </YellowButton>
           <RedButton type="button" onClick={() => deleteCard(id)}>

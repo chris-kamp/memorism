@@ -1,43 +1,16 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import CardFormInput from "./CardFormInput";
 import CardButtons from "./CardButtons";
-
-const CardContainer = styled.div`
-  border: 2px solid #66a8c4;
-  margin-bottom: 0.5rem;
-  display: flex;
-  border-radius: 0.25em;
-`;
-
-const CardSectionLeft = styled.div`
-  width: 50%;
-  border-right: 2px solid gray;
-`;
-
-const CardSectionRight = styled(CardSectionLeft)`
-  border: none;
-`;
-
-const CardSectionHeader = styled.div`
-  width: 100%;
-  background-color: #d2ecf9;
-  position: relative;
-`;
-
-const CardSectionHeading = styled.h2`
-  font-size: 1.5rem;
-  text-align: center;
-  display: inline-block;
-  width: 100%;
-`;
-
-const CardSectionBody = styled.div`
-  padding: 0.5rem;
-  background-color: #e1f2f9;
-`;
+import {
+  CardContainer,
+  CardSectionLeft,
+  CardSectionRight,
+  CardSectionHeader,
+  CardSectionHeading,
+  CardSectionBody,
+} from "./styled/CardStyledComponents"
 
 const Card = ({ id, deleteCard }) => {
   const [cardData, setCardData] = useState(null);
@@ -93,7 +66,7 @@ const Card = ({ id, deleteCard }) => {
         <CardContainer>
           {editable && (
             <form
-              id="editCardForm"
+              id={`editCardForm${id}`}
               onSubmit={handleSubmit((data) => editCard(data))}
             />
           )}
@@ -108,6 +81,7 @@ const Card = ({ id, deleteCard }) => {
                   cardData={cardData}
                   register={register}
                   errors={errors}
+                  formId={`editCardForm${id}`}
                 />
               ) : (
                 cardData.attributes.front
@@ -118,7 +92,7 @@ const Card = ({ id, deleteCard }) => {
           <CardSectionRight>
             <CardSectionHeader>
               <CardSectionHeading className="m-0">Back</CardSectionHeading>
-              <CardButtons editable={editable} toggleEditable={toggleEditable} deleteCard={deleteCard} id={id} />
+              <CardButtons editable={editable} handleToggle={toggleEditable} deleteCard={deleteCard} id={id} formId={`editCardForm${id}`} />
             </CardSectionHeader>
             <CardSectionBody>
               {editable ? (
@@ -127,6 +101,7 @@ const Card = ({ id, deleteCard }) => {
                   cardData={cardData}
                   register={register}
                   errors={errors}
+                  formId={`editCardForm${id}`}
                 />
               ) : (
                 cardData.attributes.back

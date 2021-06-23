@@ -6,6 +6,7 @@ import NewCardForm from "../card/NewCardForm";
 import DeckDetails from "./DeckDetails";
 import DeckForm from "./DeckForm";
 import styled from "styled-components";
+import NewCard from "../card/NewCard";
 
 const DeckContainer = styled.div`
   width: 80%;
@@ -133,21 +134,12 @@ const Deck = () => {
             </button>
 
             {addingCard && (
-              <>
-                <div
-                  style={{
-                    border: "solid 2px blue",
-                    marginBottom: "0.5rem",
-                    padding: "0.25rem",
-                  }}
-                >
-                  <h5>New Card</h5>
-                  <NewCardForm
+
+                  <NewCard
                     toggleAddingCard={toggleAddingCard}
                     createCard={createCard}
+                    id="0"
                   />
-                </div>
-              </>
             )}
             {cardIds.length === 0 ? <p>Deck is currently empty</p> : cardsList}
         </>
