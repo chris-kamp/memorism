@@ -2,7 +2,16 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CardDetails from "./CardDetails";
 import CardForm from "./CardForm";
-import BootCard from "react-bootstrap/Card";
+import styled from 'styled-components'
+
+const CardContainer = styled.div`
+  border: 2px solid #66a8c4;
+  margin-bottom: 0.5rem;
+  display: flex;
+  border-radius: 0.25em;
+`
+
+
 
 const Card = ({ id, deleteCard }) => {
   const [cardData, setCardData] = useState(null);
@@ -44,18 +53,14 @@ const Card = ({ id, deleteCard }) => {
       .catch((error) => console.log(error));
   };
 
+
+
   return (
     <>
       {/* Render card details only when data has been returned by the axios request */}
       {loaded && (
-        <div
-          style={{
-            border: "solid 2px blue",
-            marginBottom: "0.5rem",
-            padding: "0.25rem",
-          }}
+        <CardContainer
         >
-          <h5>Card {id}</h5>
           {editable ? (
             <CardForm
               cardData={cardData}
@@ -70,26 +75,8 @@ const Card = ({ id, deleteCard }) => {
               toggleEditable={toggleEditable}
             />
           )}
-        </div>
+        </CardContainer>
       )}
-      {loaded && <BootCard style={{ width: "36rem", display: "flex", flexDirection: "row" }}>
-        <BootCard style={{ width: "18rem" }}>
-          <BootCard.Body>
-            <BootCard.Title>Front</BootCard.Title>
-            <BootCard.Text>
-              {cardData.attributes.front}
-            </BootCard.Text>
-          </BootCard.Body>
-        </BootCard>
-        <BootCard style={{ width: "18rem" }}>
-          <BootCard.Body>
-            <BootCard.Title>Back</BootCard.Title>
-            <BootCard.Text>
-              {cardData.attributes.back}
-            </BootCard.Text>
-          </BootCard.Body>
-        </BootCard>
-      </BootCard>}
     </>
   );
 };

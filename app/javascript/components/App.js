@@ -6,12 +6,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Topnav from "./topnav/Topnav";
 import "../styles/style.css";
 
-const App = ({user}) => {
+const App = ({ user }) => {
   return (
     <>
       <Router>
         <Topnav user={user} />
-        <main style={{padding: "0.5rem"}}>
+        <main style={{ padding: "0.5rem" }}>
           <Switch>
             <Route exact path="/">
               <Decks />

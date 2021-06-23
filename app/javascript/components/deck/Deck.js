@@ -5,6 +5,16 @@ import Card from "../card/Card";
 import NewCardForm from "../card/NewCardForm";
 import DeckDetails from "./DeckDetails";
 import DeckForm from "./DeckForm";
+import styled from "styled-components";
+
+const DeckContainer = styled.div`
+  width: 80%;
+  max-width: 1024px;
+  margin: 0 auto;
+  @media (max-width: 640px) {
+    width: 95%;
+  }
+`;
 
 const Deck = () => {
   // Get deck id from URL params using a react-router-dom method
@@ -70,9 +80,9 @@ const Deck = () => {
 
   // Map card ids to Card components for rendering
   // For now, reverse so newest is first when adding cards
-  const cardsList = cardIds.map((cardId) => (
-    <Card id={cardId} key={cardId} deleteCard={deleteCard} />
-  )).reverse();
+  const cardsList = cardIds
+    .map((cardId) => <Card id={cardId} key={cardId} deleteCard={deleteCard} />)
+    .reverse();
 
   // Toggle whether deck is being edited
   const toggleEditable = () => {
@@ -98,53 +108,51 @@ const Deck = () => {
   };
 
   return (
-    <div>
+    <DeckContainer>
       {isEmpty(deck) ? (
         <p>Deck with id {id} does not exist or could not be accessed</p>
       ) : (
         <>
-          {/* Render deck details display or edit form depending on whether deck is currently being edited */}
-          {editable ? (
-            <DeckForm
-              deck={deck}
-              toggleEditable={toggleEditable}
-              editDeck={editDeck}
-            />
-          ) : (
-            <DeckDetails deck={deck} toggleEditable={toggleEditable} />
-          )}
-          <h3>Cards:</h3>
-          <button
-            type="button"
-            onClick={toggleAddingCard}
-            style={{ marginBottom: "0.5rem" }}
-          >
-            Add a Card
-          </button>
+            {/* Render deck details display or edit form depending on whether deck is currently being edited */}
+            {editable ? (
+              <DeckForm
+                deck={deck}
+                toggleEditable={toggleEditable}
+                editDeck={editDeck}
+              />
+            ) : (
+              <DeckDetails deck={deck} toggleEditable={toggleEditable} />
+            )}
+            <h3>Cards:</h3>
+            <button
+              type="button"
+              onClick={toggleAddingCard}
+              style={{ marginBottom: "0.5rem" }}
+            >
+              Add a Card
+            </button>
 
-          {addingCard && (
-            <>
-              <div
-                style={{
-                  border: "solid 2px blue",
-                  marginBottom: "0.5rem",
-                  padding: "0.25rem",
-                }}
-              >
-                <h5>New Card</h5>
-                <NewCardForm
-                  toggleAddingCard={toggleAddingCard}
-                  createCard={createCard}
-                />
-              </div>
-            </>
-          )}
-          <div>
+            {addingCard && (
+              <>
+                <div
+                  style={{
+                    border: "solid 2px blue",
+                    marginBottom: "0.5rem",
+                    padding: "0.25rem",
+                  }}
+                >
+                  <h5>New Card</h5>
+                  <NewCardForm
+                    toggleAddingCard={toggleAddingCard}
+                    createCard={createCard}
+                  />
+                </div>
+              </>
+            )}
             {cardIds.length === 0 ? <p>Deck is currently empty</p> : cardsList}
-          </div>
         </>
       )}
-    </div>
+    </DeckContainer>
   );
 };
 
