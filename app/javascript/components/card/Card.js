@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CardDetails from "./CardDetails";
 import CardForm from "./CardForm";
+import BootCard from "react-bootstrap/Card";
 
 const Card = ({ id, deleteCard }) => {
   const [cardData, setCardData] = useState(null);
@@ -71,6 +72,24 @@ const Card = ({ id, deleteCard }) => {
           )}
         </div>
       )}
+      {loaded && <BootCard style={{ width: "36rem", display: "flex", flexDirection: "row" }}>
+        <BootCard style={{ width: "18rem" }}>
+          <BootCard.Body>
+            <BootCard.Title>Front</BootCard.Title>
+            <BootCard.Text>
+              {cardData.attributes.front}
+            </BootCard.Text>
+          </BootCard.Body>
+        </BootCard>
+        <BootCard style={{ width: "18rem" }}>
+          <BootCard.Body>
+            <BootCard.Title>Back</BootCard.Title>
+            <BootCard.Text>
+              {cardData.attributes.back}
+            </BootCard.Text>
+          </BootCard.Body>
+        </BootCard>
+      </BootCard>}
     </>
   );
 };

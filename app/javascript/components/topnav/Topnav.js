@@ -10,7 +10,7 @@ const Topnav = ({user: userObj}) => {
   // Parse Rails user object from JSON
   useEffect(() => {
     setUser(JSON.parse(userObj));
-  }, userObj)
+  }, [userObj])
 
   return (
     <>
