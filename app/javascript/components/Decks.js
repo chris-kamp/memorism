@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import NewDeckForm from "./deck/NewDeckForm";
 
 const Decks = () => {
   const [decks, setDecks] = useState([]);
   const [loaded, setLoaded] = useState(false);
+  const [addingDeck, setAddingDeck] = useState(false);
+
+  const toggleAddingDeck = () => setAddingDeck(!addingDeck);
 
   // Get data for all decks, and update state accordingly
   useEffect(() => {
@@ -37,10 +41,9 @@ const Decks = () => {
         public: isPublic,
       })
       .then((response) => {
-        console.log(response);
-        return Promise.resolve(response);
+        setDecks([...decks, response.data.data])
+        toggleAddingDeck();
       })
-      .then((response) => setDecks([...decks, response.data.data]))
       .catch((error) => console.log(error));
   };
 
@@ -72,6 +75,8 @@ const Decks = () => {
   return (
     <>
       <h1>Decks</h1>
+      {/* Condiitonally display button to reveal deck creation form or the form itself */}
+      {addingDeck ? <NewDeckForm createDeck={createDeck} toggleAddingDeck={toggleAddingDeck} /> : <button type="button" onClick={toggleAddingDeck} style={{marginBottom: "1rem"}}>Add a Deck</button>}
       {loaded && (
         <div style={{ width: "max-content" }}>
           {decks.map((deck) => (
@@ -90,45 +95,6 @@ const Decks = () => {
           ))}
         </div>
       )}
-      <h2>New Deck</h2>
-      <form onSubmit={handleSubmit((data) => createDeck(data))}>
-        <label htmlFor="title">Title</label>
-        <input id="title" {...register("title", { required: true })} />
-        <br />
-        {errors.title && (
-          <span style={{ color: "red" }}>Please provide a title</span>
-        )}
-        <br />
-        <label htmlFor="description">Description</label>
-        <input
-          id="description"
-          {...register("description", { required: true })}
-        />
-        <br />
-        {errors.description && (
-          <span style={{ color: "red" }}>Please provide a description</span>
-        )}
-        <br />
-        <input
-          type="radio"
-          id="public-true"
-          value="true"
-          {...register("isPublic", { required: true })}
-          style={{ margin: "0 0.25rem" }}
-        />
-        <label htmlFor="public-true">Public</label>
-        <input
-          type="radio"
-          id="public-false"
-          value="false"
-          defaultChecked
-          {...register("isPublic", { required: true })}
-          style={{ margin: "0 0.25rem" }}
-        />
-        <label htmlFor="public-false">Private</label>
-        <br />
-        <input type="submit" value="Create" />
-      </form>
     </>
   );
 };
