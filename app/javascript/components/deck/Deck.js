@@ -2,11 +2,11 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Card from "../card/Card";
-import NewCardForm from "../card/NewCardForm";
 import DeckDetails from "./DeckDetails";
 import DeckForm from "./DeckForm";
 import styled from "styled-components";
 import NewCard from "../card/NewCard";
+import Cards from "./Cards";
 
 const DeckContainer = styled.div`
   width: 80%;
@@ -124,24 +124,7 @@ const Deck = () => {
             ) : (
               <DeckDetails deck={deck} toggleEditable={toggleEditable} />
             )}
-            <h3>Cards:</h3>
-            <button
-              type="button"
-              onClick={toggleAddingCard}
-              style={{ marginBottom: "0.5rem" }}
-            >
-              Add a Card
-            </button>
-
-            {addingCard && (
-
-                  <NewCard
-                    toggleAddingCard={toggleAddingCard}
-                    createCard={createCard}
-                    id="0"
-                  />
-            )}
-            {cardIds.length === 0 ? <p>Deck is currently empty</p> : cardsList}
+          <Cards addingCard={addingCard} toggleAddingCard={toggleAddingCard} createCard={createCard} cardIds={cardIds} deleteCard={deleteCard} />
         </>
       )}
     </DeckContainer>
