@@ -4,8 +4,8 @@ import { useParams } from "react-router-dom";
 import DeckDetails from "./DeckDetails";
 import DeckForm from "./DeckForm";
 import styled from "styled-components";
-import NewCard from "../card/NewCard";
 import Cards from "./Cards";
+import DeckLoadingMessage from "./DeckLoadingMessage";
 
 const DeckContainer = styled.div`
   width: 80%;
@@ -16,7 +16,7 @@ const DeckContainer = styled.div`
   }
 `;
 
-const Deck = () => {
+const Deck = ({pushAlert, clearAlerts}) => {
   // Get deck id from URL params using a react-router-dom method
   const { id } = useParams();
   // Initialise deck as an empty object
@@ -27,6 +27,8 @@ const Deck = () => {
   const [editable, setEditable] = useState(false);
   // Track whether a new card is being created, initially false
   const [addingCard, setAddingCard] = useState(false);
+  // Track whether page is loading, initially true
+  const [loading, setLoading] = useState(true)
 
   // Helper function to check if object is empty
   const isEmpty = (obj) => Object.keys(obj).length === 0;
@@ -43,8 +45,14 @@ const Deck = () => {
           })
         );
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   }, [id, cardIds.length]);
+
+  // Alert loading while loading, then clear alerts
+  useEffect(() => {
+    loading ? pushAlert("Loading...") : clearAlerts()
+  }, [loading])
 
   // Send request to delete a card from the database, and remove the card
   // from state if successful
@@ -103,7 +111,10 @@ const Deck = () => {
 
   return (
     <DeckContainer>
-      {isEmpty(deck) ? (
+      {/* Display loading message while loading */}
+      {loading && <DeckLoadingMessage />}
+      {/* If not loading, display empty message or deck page */}
+      {!loading && (isEmpty(deck) ? (
         <p>Deck with id {id} does not exist or could not be accessed</p>
       ) : (
         <>
@@ -119,7 +130,7 @@ const Deck = () => {
             )}
           <Cards addingCard={addingCard} toggleAddingCard={toggleAddingCard} createCard={createCard} cardIds={cardIds} deleteCard={deleteCard} />
         </>
-      )}
+      ))}
     </DeckContainer>
   );
 };
