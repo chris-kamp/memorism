@@ -12,7 +12,7 @@ import {
   CardSectionBody,
 } from "./styled/CardStyledComponents"
 
-const Card = ({ id, deleteCard }) => {
+const Card = ({ id, deleteCard, clearErrors, pushError }) => {
   const [cardData, setCardData] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [editable, setEditable] = useState(false);
@@ -53,10 +53,24 @@ const Card = ({ id, deleteCard }) => {
     axios
       .put(`/api/cards/${id}`, { front, back })
       .then((response) => {
+        clearErrors();
         toggleEditable();
         setCardData(response.data.data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const status = error.response.status;
+        if (status === 401) {
+          pushError(
+            "Edit failed: only the deck owner may edit card details. If you are the owner, you may need to log in."
+          );
+        } else if (status === 500) {
+          pushError(
+            "Edit failed: the server did not respond. Try again later."
+          );
+        } else {
+          pushError("Edit failed. Try again later.");
+        }
+      });
   };
 
   return (

@@ -16,7 +16,7 @@ const DeckContainer = styled.div`
   }
 `;
 
-const Deck = ({pushAlert, clearAlerts, pushError, clearErrors}) => {
+const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
   // Get deck id from URL params using a react-router-dom method
   const { id } = useParams();
   // Initialise deck as an empty object
@@ -28,17 +28,17 @@ const Deck = ({pushAlert, clearAlerts, pushError, clearErrors}) => {
   // Track whether a new card is being created, initially false
   const [addingCard, setAddingCard] = useState(false);
   // Track whether page is loading, initially true
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
   // Helper function to check if object is empty
   const isEmpty = (obj) => Object.keys(obj).length === 0;
 
   // Get the deck with the ID obtained from URL params
   useEffect(() => {
-    clearErrors();
     axios
       .get(`/api/decks/${id}`)
       .then((response) => {
+        clearErrors();
         setDeck(response.data.data.attributes);
         setCardIds(
           response.data.data.relationships.cards.data.map((card) => {
@@ -46,14 +46,16 @@ const Deck = ({pushAlert, clearAlerts, pushError, clearErrors}) => {
           })
         );
       })
-      .catch(() => pushError(`Deck with id ${id} does not exist or could not be accessed`))
+      .catch(() =>
+        pushError(`Deck with id ${id} does not exist or could not be accessed`)
+      )
       .finally(() => setLoading(false));
   }, [id, cardIds.length]);
 
   // Alert loading while loading, then clear alerts
   useEffect(() => {
-    loading ? pushAlert("Loading...") : clearAlerts()
-  }, [loading])
+    loading ? pushAlert("Loading...") : clearAlerts();
+  }, [loading]);
 
   // Send request to delete a card from the database, and remove the card
   // from state if successful
@@ -65,8 +67,24 @@ const Deck = ({pushAlert, clearAlerts, pushError, clearErrors}) => {
     // Send delete request with the id of the relevant card
     axios
       .delete(`/api/cards/${deletionId}`)
-      .then(() => setCardIds(cardIds.filter((cardId) => cardId !== deletionId)))
-      .catch((error) => console.log(error));
+      .then(() => {
+        clearErrors();
+        setCardIds(cardIds.filter((cardId) => cardId !== deletionId));
+      })
+      .catch((error) => {
+        const status = error.response.status;
+        if (status === 401) {
+          pushError(
+            "Deletion failed: only the deck owner may delete a card. If you are the owner, you may need to log in."
+          );
+        } else if (status === 500) {
+          pushError(
+            "Deletion failed: the server did not respond. Try again later."
+          );
+        } else {
+          pushError("Deletion failed. Try again later.");
+        }
+      });
   };
 
   // Attempt to create a new card in the relevant deck,
@@ -81,10 +99,24 @@ const Deck = ({pushAlert, clearAlerts, pushError, clearErrors}) => {
         deck_id: id,
       })
       .then((response) => {
+        clearErrors();
         setCardIds([...cardIds, response.data.data.id]);
         toggleAddingCard();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const status = error.response.status;
+        if (status === 401) {
+          pushError(
+            "Card creation failed: only the deck owner may add a card. If you are the owner, you may need to log in."
+          );
+        } else if (status === 500) {
+          pushError(
+            "Card creation failed: the server did not respond. Try again later."
+          );
+        } else {
+          pushError("Card creation failed. Try again later.");
+        }
+      });
   };
 
   // Toggle whether deck is being edited
@@ -104,10 +136,24 @@ const Deck = ({pushAlert, clearAlerts, pushError, clearErrors}) => {
     axios
       .put(`/api/decks/${id}`, { title, description, public: isPublic })
       .then((response) => {
+        clearErrors();
         toggleEditable();
         setDeck(response.data.data.attributes);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const status = error.response.status;
+        if (status === 401) {
+          pushError(
+            "Edit failed: only the deck owner may edit the deck details. If you are the owner, you may need to log in."
+          );
+        } else if (status === 500) {
+          pushError(
+            "Edit failed: the server did not respond. Try again later."
+          );
+        } else {
+          pushError("Edit failed. Try again later.");
+        }
+      });
   };
 
   return (
@@ -117,17 +163,25 @@ const Deck = ({pushAlert, clearAlerts, pushError, clearErrors}) => {
       {/* If not loading and deck object not empty, display deck page */}
       {!loading && !isEmpty(deck) && (
         <>
-            {/* Render deck details display or edit form depending on whether deck is currently being edited */}
-            {editable ? (
-              <DeckForm
-                deck={deck}
-                toggleEditable={toggleEditable}
-                editDeck={editDeck}
-              />
-            ) : (
-              <DeckDetails deck={deck} toggleEditable={toggleEditable} />
-            )}
-          <Cards addingCard={addingCard} toggleAddingCard={toggleAddingCard} createCard={createCard} cardIds={cardIds} deleteCard={deleteCard} />
+          {/* Render deck details display or edit form depending on whether deck is currently being edited */}
+          {editable ? (
+            <DeckForm
+              deck={deck}
+              toggleEditable={toggleEditable}
+              editDeck={editDeck}
+            />
+          ) : (
+            <DeckDetails deck={deck} toggleEditable={toggleEditable} />
+          )}
+          <Cards
+            addingCard={addingCard}
+            toggleAddingCard={toggleAddingCard}
+            createCard={createCard}
+            cardIds={cardIds}
+            deleteCard={deleteCard}
+            clearErrors={clearErrors}
+            pushError={pushError}
+          />
         </>
       )}
     </DeckContainer>

@@ -4,12 +4,12 @@ import NewCard from "../card/NewCard";
 import { GreenButton } from "../styled/ButtonStyledComponents"
 
 
-const Cards = ({ addingCard, toggleAddingCard, createCard, cardIds, deleteCard }) => {
+const Cards = ({ addingCard, toggleAddingCard, createCard, cardIds, deleteCard, pushError, clearErrors }) => {
 
   // Map card ids to Card components for rendering
   // For now, reverse so newest is first when adding cards
   const cardsList = cardIds
-    .map((cardId) => <Card id={cardId} key={cardId} deleteCard={deleteCard} />)
+    .map((cardId) => <Card id={cardId} key={cardId} deleteCard={deleteCard} pushError={pushError} clearErrors={clearErrors} />)
     .reverse();
 
   return (
