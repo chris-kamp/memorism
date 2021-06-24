@@ -5,39 +5,44 @@ import { hot } from "react-hot-loader";
 import { BrowserRouter as Router, Route, Switch, useHistory } from "react-router-dom";
 import Topnav from "./topnav/Topnav";
 import "../styles/style.css";
-import Alert from "./shared/Alert";
+import FlashAlert from "./shared/FlashAlert";
+import FlashError from "./shared/FlashError";
 
 const Main = ({ user }) => {
   const [alerts, setAlerts] = useState([]);
   const pushAlert = (alert) => setAlerts([...alerts, alert]);
   const clearAlerts = () => setAlerts([]);
+  const [errors, setErrors] = useState([]);
+  const pushError = (error) => setErrors([...errors, error])
+  const clearErrors = () => setErrors([])
   const history = useHistory();
 
+  // Clear alerts and errors on route change
   useEffect(() => {
     const unlisten = history.listen(() => {
-      if (alerts.length > 0) {
-        setAlerts([]);
-      }
+        clearAlerts();
+        clearErrors();
     });
     return () => {
       unlisten();
     };
-  }, [history, setAlerts]);
+  }, [history, setAlerts, setErrors]);
 
   return (
     <>
       <Topnav user={user} />
-      <Alert alerts={alerts} />
+      <FlashError errors={errors} />
+      <FlashAlert alerts={alerts} />
       <main style={{ padding: "0.5rem" }}>
         <Switch>
           <Route exact path="/">
             <Decks />
           </Route>
-          <Route exact path="/decks/:id">
-            <Deck pushAlert={pushAlert} clearAlerts={clearAlerts} />
-          </Route>
           <Route exact path="/decks">
             <Decks />
+          </Route>
+          <Route exact path="/decks/:id">
+            <Deck pushAlert={pushAlert} clearAlerts={clearAlerts} pushError={pushError} clearErrors={clearErrors} />
           </Route>
         </Switch>
       </main>

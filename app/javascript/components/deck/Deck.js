@@ -16,7 +16,7 @@ const DeckContainer = styled.div`
   }
 `;
 
-const Deck = ({pushAlert, clearAlerts}) => {
+const Deck = ({pushAlert, clearAlerts, pushError, clearErrors}) => {
   // Get deck id from URL params using a react-router-dom method
   const { id } = useParams();
   // Initialise deck as an empty object
@@ -35,6 +35,7 @@ const Deck = ({pushAlert, clearAlerts}) => {
 
   // Get the deck with the ID obtained from URL params
   useEffect(() => {
+    clearErrors();
     axios
       .get(`/api/decks/${id}`)
       .then((response) => {
@@ -45,7 +46,7 @@ const Deck = ({pushAlert, clearAlerts}) => {
           })
         );
       })
-      .catch((error) => console.log(error))
+      .catch(() => pushError(`Deck with id ${id} does not exist or could not be accessed`))
       .finally(() => setLoading(false));
   }, [id, cardIds.length]);
 
@@ -113,10 +114,8 @@ const Deck = ({pushAlert, clearAlerts}) => {
     <DeckContainer>
       {/* Display loading message while loading */}
       {loading && <DeckLoadingMessage />}
-      {/* If not loading, display empty message or deck page */}
-      {!loading && (isEmpty(deck) ? (
-        <p>Deck with id {id} does not exist or could not be accessed</p>
-      ) : (
+      {/* If not loading and deck object not empty, display deck page */}
+      {!loading && !isEmpty(deck) && (
         <>
             {/* Render deck details display or edit form depending on whether deck is currently being edited */}
             {editable ? (
@@ -130,7 +129,7 @@ const Deck = ({pushAlert, clearAlerts}) => {
             )}
           <Cards addingCard={addingCard} toggleAddingCard={toggleAddingCard} createCard={createCard} cardIds={cardIds} deleteCard={deleteCard} />
         </>
-      ))}
+      )}
     </DeckContainer>
   );
 };
