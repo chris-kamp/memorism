@@ -1,4 +1,5 @@
 import React from "react";
+import {YellowButton} from "../styled/ButtonStyledComponents"
 
 const DeckDetails = ({ deck, toggleEditable }) => {
   return (
@@ -8,7 +9,7 @@ const DeckDetails = ({ deck, toggleEditable }) => {
         {deck.public ? "(Public)" : "(Private)"}
       </p>
       <p>{deck.description}</p>
-      <button type="button" onClick={toggleEditable}>Edit</button>
+      <YellowButton type="button" onClick={toggleEditable} style={{marginBottom: "1rem"}}>Edit Deck</YellowButton>
     </>
   );
 };
