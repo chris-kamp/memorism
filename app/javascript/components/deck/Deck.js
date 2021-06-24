@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Card from "../card/Card";
 import DeckDetails from "./DeckDetails";
 import DeckForm from "./DeckForm";
 import styled from "styled-components";
@@ -78,12 +77,6 @@ const Deck = () => {
       })
       .catch((error) => console.log(error));
   };
-
-  // Map card ids to Card components for rendering
-  // For now, reverse so newest is first when adding cards
-  const cardsList = cardIds
-    .map((cardId) => <Card id={cardId} key={cardId} deleteCard={deleteCard} />)
-    .reverse();
 
   // Toggle whether deck is being edited
   const toggleEditable = () => {
