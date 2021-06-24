@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../card/Card";
 import NewCard from "../card/NewCard";
-
+import { GreenButton } from "../styled/ButtonStyledComponents"
 
 
 const Cards = ({ addingCard, toggleAddingCard, createCard, cardIds, deleteCard }) => {
@@ -16,13 +16,13 @@ const Cards = ({ addingCard, toggleAddingCard, createCard, cardIds, deleteCard }
     <>
       {" "}
       <h3>Cards:</h3>
-      <button
+      <GreenButton
         type="button"
         onClick={toggleAddingCard}
         style={{ marginBottom: "0.5rem" }}
       >
         Add a Card
-      </button>
+      </GreenButton>
       {addingCard && (
         <NewCard
           toggleAddingCard={toggleAddingCard}
