@@ -3,6 +3,8 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import NewDeckForm from "./deck/NewDeckForm";
+import DeckTilesContainer from "./deck/DeckTilesContainer";
+import DeckTile from "./deck/DeckTile";
 
 const Decks = ({ pushError, clearErrors }) => {
   const [decks, setDecks] = useState([]);
@@ -32,6 +34,12 @@ const Decks = ({ pushError, clearErrors }) => {
       mounted = false;
     };
   }, [decks.length]);
+
+  // Get CSRF token and set default axios headers
+  useEffect(() => {
+    const csrfToken = document.querySelector("[name=csrf-token]").content;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+  }, [])
 
   const createDeck = ({ title, description, isPublic }) => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
@@ -63,9 +71,8 @@ const Decks = ({ pushError, clearErrors }) => {
       });
   };
 
+  // Attempt to delete a deck and remove it from display if successful
   const removeDeck = (id) => {
-    const csrfToken = document.querySelector("[name=csrf-token]").content;
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .delete(`/api/decks/${id}`)
       .then(() => {
@@ -121,22 +128,11 @@ const Decks = ({ pushError, clearErrors }) => {
         </button>
       )}
       {loaded && (
-        <div style={{ width: "max-content" }}>
-          {decks.map((deck) => (
-            <p
-              key={deck.id}
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <Link to={`/decks/${deck.id}`}>{deck.attributes.title}</Link>
-              <button
-                style={{ marginLeft: "1rem" }}
-                onClick={() => removeDeck(deck.id)}
-              >
-                X
-              </button>
-            </p>
-          ))}
-        </div>
+        <DeckTilesContainer>
+          {decks.map((deck) => {
+            return <DeckTile key={deck.id} deck={deck} removeDeck={removeDeck} />
+          })}
+        </DeckTilesContainer>
       )}
     </>
   );

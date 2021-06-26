@@ -15,32 +15,31 @@ import {
   TilePara,
 } from "../styled/DeckStyledComponents";
 
-const truncate = (str, len) => str.substring(0, len) + "...";
+const truncate = (str, len) => str.length > len ? str.substring(0, len) + "..." : str;
 
-const DeckTile = ({ id }) => {
+const DeckTile = ({ deck, removeDeck }) => {
   return (
     <Tile>
       <TileHeader>
         <Link
-          to={`/decks/${id}`}
+          to={`/decks/${deck.id}`}
           style={{ color: "#F5F5F5", textDecoration: "underline" }}
         >
-          <TileHeading className="m-0">Deck Title</TileHeading>
+          <TileHeading className="m-0">{deck.attributes.title}</TileHeading>
         </Link>
         <TileSpan>Username</TileSpan>
         <ButtonContainer>
-          <YellowButton>E</YellowButton>
-          <RedButton>X</RedButton>
+          <RedButton onClick={(() => removeDeck(deck.id))}>X</RedButton>
         </ButtonContainer>
       </TileHeader>
       <TileBody>
         <TileSubheader>
-          <TileSpan>10 Cards</TileSpan>
-          <TileSpan>Public</TileSpan>
+          <TileSpan># Cards</TileSpan>
+          <TileSpan>{deck.attributes.public ? "Public" : "Private"}</TileSpan>
         </TileSubheader>
         <TilePara>
           {truncate(
-            "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, sunt earum autem obcaecati esse dolore provident repellendus cupiditate quibusdam atque totam minus deleniti rerum. Facilis fugit magni recusandae aliquid vero!Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, sunt earum autem obcaecati esse dolore provident repellendus cupiditate quibusdam atque totam minus deleniti rerum. Facilis fugit magni recusandae aliquid vero!",
+            deck.attributes.description,
             100
           )}
         </TilePara>

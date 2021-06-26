@@ -18,6 +18,10 @@ const TileHeader = styled.header`
 `;
 
 const TileHeading = styled.h2`
+  display: inline-block;
+  width: auto;
+  text-decoration: underline;
+  margin: 0 auto;
   font-size: 1.5rem;
   font-weight: bold;
   transition: transform 0.1s;
@@ -28,7 +32,7 @@ const TileHeading = styled.h2`
 
 const TileSpan = styled.span`
   font-weight: bold;
-  display: inline-block;
+  display: block;
 `;
 
 const TileBody = styled.div`
