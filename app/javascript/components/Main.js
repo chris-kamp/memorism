@@ -13,6 +13,7 @@ import "../styles/style.css";
 import FlashAlert from "./shared/FlashAlert";
 import FlashError from "./shared/FlashError";
 import DeckTile from "./deck/DeckTile";
+import DeckTilesContainer from "./deck/DeckTilesContainer";
 
 const Main = ({ user }) => {
   const [alerts, setAlerts] = useState([]);
@@ -57,7 +58,15 @@ const Main = ({ user }) => {
           </Route>
           {/* TEST: */}
           <Route exact path="/test">
-            <DeckTile />
+            <DeckTilesContainer>
+              <DeckTile />
+              <DeckTile />
+              <DeckTile />
+              <DeckTile />
+              <DeckTile />
+              <DeckTile />
+              <DeckTile />
+            </DeckTilesContainer>
           </Route>
         </Switch>
       </main>
