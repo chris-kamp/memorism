@@ -12,6 +12,7 @@ import Topnav from "./topnav/Topnav";
 import "../styles/style.css";
 import FlashAlert from "./shared/FlashAlert";
 import FlashError from "./shared/FlashError";
+import DeckTile from "./deck/DeckTile";
 
 const Main = ({ user }) => {
   const [alerts, setAlerts] = useState([]);
@@ -53,6 +54,10 @@ const Main = ({ user }) => {
               pushError={pushError}
               clearErrors={clearErrors}
             />
+          </Route>
+          {/* TEST: */}
+          <Route exact path="/test">
+            <DeckTile />
           </Route>
         </Switch>
       </main>

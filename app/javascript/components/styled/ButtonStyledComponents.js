@@ -2,8 +2,8 @@ import styled from "styled-components"
 
 const ButtonContainer = styled.div`
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 0.1rem;
+  top: 0.1rem;
 `;
 
 const Button = styled.button`
