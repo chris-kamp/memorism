@@ -14,7 +14,7 @@ const Topnav = ({user: userObj}) => {
 
   return (
     <>
-      <Navbar expand="lg" bg="light" variant="light" className="border-bottom border-dark">
+      <Navbar expand="lg" bg="dark" variant="dark" className="border-bottom border-dark">
         <LinkContainer to="/decks"><Navbar.Brand>Memorism</Navbar.Brand></LinkContainer>
         {/* Wraps elements which collapse into mobile dropdown menu */}
         <Navbar.Collapse id="responsive-navbar-nav">

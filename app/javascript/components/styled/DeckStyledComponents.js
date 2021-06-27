@@ -12,7 +12,6 @@ const Tile = styled.section`
 
 const TileHeader = styled.header`
   background-color: #6080bf;
-  color: #f5f5f5;
   text-align: center;
   position: relative;
 `;
@@ -37,6 +36,7 @@ const TileSpan = styled.span`
 
 const TileBody = styled.div`
   background-color: #d9d9d9;
+  color: #020723;
   padding: 0.5rem;
 `;
 

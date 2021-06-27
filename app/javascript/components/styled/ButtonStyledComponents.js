@@ -6,6 +6,11 @@ const ButtonContainer = styled.div`
   top: 0.1rem;
 `;
 
+const CenteredButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 const Button = styled.button`
   border: none;
   text-align: center;
@@ -38,4 +43,5 @@ export {
   RedButton,
   YellowButton,
   GreenButton,
+  CenteredButtonContainer,
 };

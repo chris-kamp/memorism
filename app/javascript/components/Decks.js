@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import NewDeckForm from "./deck/NewDeckForm";
 import DeckTilesContainer from "./deck/DeckTilesContainer";
 import DeckTile from "./deck/DeckTile";
+import DecksTopSection from "./deck/DecksTopSection";
 
 // Given a response object and a user_id, return the corresponding user data
 const findUser = (included, user_id) =>
@@ -59,6 +57,7 @@ const Decks = ({ pushError, clearErrors }) => {
   const [loaded, setLoaded] = useState(false);
   const [addingDeck, setAddingDeck] = useState(false);
 
+  // Toggle state for whether the new deck creation form is open
   const toggleAddingDeck = () => setAddingDeck(!addingDeck);
 
   // Get data for all decks, parse to useable deck objects, and update state accordingly
@@ -142,31 +141,10 @@ const Decks = ({ pushError, clearErrors }) => {
       });
   };
 
-  // react-hook-form setup
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
 
   return (
     <>
-      <h1>Decks</h1>
-      {/* Condiitonally display button to reveal deck creation form or the form itself */}
-      {addingDeck ? (
-        <NewDeckForm
-          createDeck={createDeck}
-          toggleAddingDeck={toggleAddingDeck}
-        />
-      ) : (
-        <button
-          type="button"
-          onClick={toggleAddingDeck}
-          style={{ marginBottom: "1rem" }}
-        >
-          Add a Deck
-        </button>
-      )}
+      <DecksTopSection createDeck={createDeck} toggleAddingDeck={toggleAddingDeck} addingDeck={addingDeck} />
       {loaded && (
         <DeckTilesContainer>
           {decks.map((deck) => {
