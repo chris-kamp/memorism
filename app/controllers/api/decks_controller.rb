@@ -1,7 +1,7 @@
 module Api
   class DecksController < ApplicationController
     before_action :get_deck, only: %i[show update destroy]
-    before_action :set_options, only: %i[index show update]
+    before_action :set_options, only: %i[index show update create]
 
     def index
       @decks = Deck.all
@@ -18,7 +18,7 @@ module Api
         @deck = current_user.decks.new(deck_params)
         @deck = User.first.decks.new(deck_params)
         if @deck.save
-          render json: DeckSerializer.new(@deck).serializable_hash.to_json
+          render json: DeckSerializer.new(@deck, @options).serializable_hash.to_json
         else
           render json: { error: @deck.errors.messages }, status: 422
         end
@@ -63,7 +63,7 @@ module Api
     end
 
     def set_options
-      @options = { include: %i[cards] }
+      @options = { include: %i[cards user] }
     end
   end
 end

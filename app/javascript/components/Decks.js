@@ -6,6 +6,54 @@ import NewDeckForm from "./deck/NewDeckForm";
 import DeckTilesContainer from "./deck/DeckTilesContainer";
 import DeckTile from "./deck/DeckTile";
 
+// Given a response object and a user_id, return the corresponding user data
+const findUser = (included, user_id) =>
+  included.find(
+    (element) => element.type === "user" && element.id === user_id.toString()
+  );
+
+// Parse user data into an object in useable format
+const parseUser = (data) => ({
+  id: data.id,
+  username: data.attributes.username,
+});
+
+// Given deck data and included relationships, return an array of the included cards which belong to that deck
+const findCards = (deck, included) => {
+  const deckCardIds = deck.relationships.cards.data.map(
+    (element) => element.id
+  );
+  return included.filter(
+    (element) => element.type === "card" && deckCardIds.includes(element.id)
+  );
+};
+
+// Parse an array of card data into an array of card objects in useable format
+const parseCards = (data) =>
+  data.map((cardData) => ({
+    id: cardData.id,
+    back: cardData.attributes.back,
+    front: cardData.attributes.front,
+    deck_id: cardData.attributes.deck_id,
+  }));
+
+// Given deck data and included relationships from a response object, return a deck object in useable format
+const parseDeck = (deckData, included) => ({
+  id: deckData.id,
+  title: deckData.attributes.title,
+  description: deckData.attributes.description,
+  public: deckData.attributes.public,
+  user_id: deckData.attributes.user_id,
+  user: parseUser(findUser(included, deckData.attributes.user_id)),
+  cards: parseCards(findCards(deckData, included)),
+});
+
+// Parse a response object containing a collection of decks into an array of deck objects in useable format
+const parseDecks = (response) =>
+  response.data.data.map((deckData) =>
+    parseDeck(deckData, response.data.included)
+  );
+
 const Decks = ({ pushError, clearErrors }) => {
   const [decks, setDecks] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -13,7 +61,7 @@ const Decks = ({ pushError, clearErrors }) => {
 
   const toggleAddingDeck = () => setAddingDeck(!addingDeck);
 
-  // Get data for all decks, and update state accordingly
+  // Get data for all decks, parse to useable deck objects, and update state accordingly
   useEffect(() => {
     let mounted = true;
     axios
@@ -21,7 +69,7 @@ const Decks = ({ pushError, clearErrors }) => {
       .then((response) => {
         // Update state only if component is mounted
         if (mounted) {
-          setDecks(response.data.data);
+          setDecks(parseDecks(response));
           setLoaded(true);
         }
       })
@@ -39,11 +87,10 @@ const Decks = ({ pushError, clearErrors }) => {
   useEffect(() => {
     const csrfToken = document.querySelector("[name=csrf-token]").content;
     axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
-  }, [])
+  }, []);
 
+  // Attempt to create a new deck, and add it to state if response indicates success
   const createDeck = ({ title, description, isPublic }) => {
-    const csrfToken = document.querySelector("[name=csrf-token]").content;
-    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
     axios
       .post("/api/decks", {
         title,
@@ -52,7 +99,7 @@ const Decks = ({ pushError, clearErrors }) => {
       })
       .then((response) => {
         clearErrors();
-        setDecks([...decks, response.data.data]);
+        setDecks([...decks, parseDeck(response.data.data, response.data.included)]);
         toggleAddingDeck();
       })
       .catch((error) => {
@@ -77,14 +124,7 @@ const Decks = ({ pushError, clearErrors }) => {
       .delete(`/api/decks/${id}`)
       .then(() => {
         clearErrors();
-        setDecks(
-          decks.reduce((arr, deck) => {
-            if (deck.id !== id) {
-              arr.push(deck);
-            }
-            return arr;
-          }, [])
-        );
+        setDecks(decks.filter((deck) => deck.id !== id));
       })
       .catch((error) => {
         const status = error.response.status;
@@ -130,7 +170,9 @@ const Decks = ({ pushError, clearErrors }) => {
       {loaded && (
         <DeckTilesContainer>
           {decks.map((deck) => {
-            return <DeckTile key={deck.id} deck={deck} removeDeck={removeDeck} />
+            return (
+              <DeckTile key={deck.id} deck={deck} removeDeck={removeDeck} />
+            );
           })}
         </DeckTilesContainer>
       )}

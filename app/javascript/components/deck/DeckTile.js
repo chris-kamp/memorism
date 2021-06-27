@@ -25,21 +25,21 @@ const DeckTile = ({ deck, removeDeck }) => {
           to={`/decks/${deck.id}`}
           style={{ color: "#F5F5F5", textDecoration: "underline" }}
         >
-          <TileHeading className="m-0">{deck.attributes.title}</TileHeading>
+          <TileHeading className="m-0">{deck.title}</TileHeading>
         </Link>
-        <TileSpan>Username</TileSpan>
+        <TileSpan>{deck.user.username}</TileSpan>
         <ButtonContainer>
           <RedButton onClick={(() => removeDeck(deck.id))}>X</RedButton>
         </ButtonContainer>
       </TileHeader>
       <TileBody>
         <TileSubheader>
-          <TileSpan># Cards</TileSpan>
-          <TileSpan>{deck.attributes.public ? "Public" : "Private"}</TileSpan>
+          <TileSpan>{deck.cards.length} {deck.cards.length === 1 ? "card" : "cards"}</TileSpan>
+          <TileSpan>{deck.public ? "Public" : "Private"}</TileSpan>
         </TileSubheader>
         <TilePara>
           {truncate(
-            deck.attributes.description,
+            deck.description,
             100
           )}
         </TilePara>
