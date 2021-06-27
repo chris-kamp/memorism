@@ -1,5 +1,21 @@
 import styled from "styled-components";
 
+const TopSection = styled.section`
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1rem;
+`;
+
+const TopHeading = styled.h1`
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  font-size: 4rem;
+`;
+
 const Tile = styled.section`
   width: 24rem;
   height: 12rem;
@@ -68,4 +84,6 @@ export {
   TileSubheader,
   TilePara,
   GridContainer,
+  TopSection,
+  TopHeading,
 };

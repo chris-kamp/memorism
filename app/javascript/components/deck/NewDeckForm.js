@@ -1,57 +1,105 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import {
+  TileHeader,
+  TileBody,
+  TileSubheader,
+  TileSpan,
+} from "../styled/DeckStyledComponents";
+import { ErrorPara } from "../styled/SharedStyledComponents";
+import {
+  NewDeckHeader,
+  NewDeckTile,
+  TitleInput,
+  LeftLabel,
+  TopLabel,
+  TitleLabel,
+  DescriptionTextArea,
+  VisibilitySelect,
+} from "../styled/NewDeckStyledComponents"
+import {
+  GreenButton,
+  RedButton,
+  CenteredButtonContainer,
+} from "../styled/ButtonStyledComponents";
 
-const NewDeckForm = ({createDeck, toggleAddingDeck }) => {
-    // react-hook-form setup
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm();
+const NewDeckForm = ({createDeck, toggleAddingDeck}) => {
+  // react-hook-form setup
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
+  // Callback function to run when new deck form is submitted
+  const onFormSubmit = (data) => {
+    // Create a new deck from the form data
+    createDeck(data, () => {
+      // Send callback to reset form values if creation succeeds
+      reset({
+        title: "",
+        description: "",
+        isPublic: "true",
+      });
+    });
+  };
   return (
-    <>
-      <h2>New Deck</h2>
-      <form onSubmit={handleSubmit((data) => createDeck(data))}>
-        <label htmlFor="title">Title</label>
-        <input id="title" {...register("title", { required: true })} />
-        <br />
-        {errors.title && (
-          <span style={{ color: "red" }}>Please provide a title</span>
-        )}
-        <br />
-        <label htmlFor="description">Description</label>
-        <input
-          id="description"
-          {...register("description", { required: true })}
-        />
-        <br />
-        {errors.description && (
-          <span style={{ color: "red" }}>Please provide a description</span>
-        )}
-        <br />
-        <input
-          type="radio"
-          id="public-true"
-          value="true"
-          {...register("isPublic", { required: true })}
-          style={{ margin: "0 0.25rem" }}
-        />
-        <label htmlFor="public-true">Public</label>
-        <input
-          type="radio"
-          id="public-false"
-          value="false"
-          defaultChecked
-          {...register("isPublic", { required: true })}
-          style={{ margin: "0 0.25rem" }}
-        />
-        <label htmlFor="public-false">Private</label>
-        <br />
-        <input type="submit" value="Create" style={{marginRight: "0.5rem"}} />
-        <button type="button" onClick={toggleAddingDeck}>Cancel</button>
-      </form>
-    </>
+    <NewDeckTile>
+      <form onSubmit={handleSubmit(onFormSubmit)} id="newDeckForm" />
+      <NewDeckHeader>
+        <TitleLabel htmlFor="newDeckTitle">TITLE:</TitleLabel>
+        <div>
+          <TitleInput
+            id="newDeckTitle"
+            {...register("title", { required: true })}
+            form="newDeckForm"
+          />
+          {errors.title && <ErrorPara>Please provide a title</ErrorPara>}
+        </div>
+      </NewDeckHeader>
+      <TileBody>
+        <TileSubheader>
+          <TileSpan>0 cards</TileSpan>
+          <div>
+            <LeftLabel htmlFor="isPublic">Visibility: </LeftLabel>
+            <VisibilitySelect
+              id="isPublic"
+              {...register("isPublic")}
+              form="newDeckForm"
+            >
+              <option value="true">Public</option>
+              <option value="false">Private</option>
+            </VisibilitySelect>
+          </div>
+        </TileSubheader>
+        <TopLabel htmlFor="description">Description:</TopLabel>
+        <div style={{ marginBottom: "0.5rem" }}>
+          <DescriptionTextArea
+            id="description"
+            {...register("description", { required: true })}
+            form="newDeckForm"
+          />
+          {errors.description && (
+            <ErrorPara>Please provide a description</ErrorPara>
+          )}
+        </div>
+        <CenteredButtonContainer>
+          <GreenButton
+            as="input"
+            type="submit"
+            value="CONFIRM"
+            form="newDeckForm"
+          />
+          <RedButton
+            onClick={toggleAddingDeck}
+            style={{ marginBottom: "1rem" }}
+          >
+            CANCEL
+          </RedButton>
+        </CenteredButtonContainer>
+      </TileBody>
+    </NewDeckTile>
   );
 };
 

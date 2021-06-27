@@ -89,7 +89,8 @@ const Decks = ({ pushError, clearErrors }) => {
   }, []);
 
   // Attempt to create a new deck, and add it to state if response indicates success
-  const createDeck = ({ title, description, isPublic }) => {
+  // Optionally, run a given callback (eg. to reset form after creation) only if post succeeds
+  const createDeck = ({ title, description, isPublic }, callback) => {
     axios
       .post("/api/decks", {
         title,
@@ -100,6 +101,7 @@ const Decks = ({ pushError, clearErrors }) => {
         clearErrors();
         setDecks([...decks, parseDeck(response.data.data, response.data.included)]);
         toggleAddingDeck();
+        callback && callback();
       })
       .catch((error) => {
         const status = error.response.status;
