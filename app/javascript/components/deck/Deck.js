@@ -139,7 +139,7 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
       .then((response) => {
         clearErrors();
         toggleEditable();
-        setDeck(response.data.data.attributes);
+        setDeck(parseDeck(response.data.data, response.data.included));
       })
       .catch((error) => {
         const status = error.response.status;
