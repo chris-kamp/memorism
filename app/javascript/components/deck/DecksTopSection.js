@@ -1,7 +1,7 @@
 import React from "react";
 import { GreenButton, RedButton } from "../styled/ButtonStyledComponents";
 import { TopSection, TopHeading } from "../styled/DeckStyledComponents";
-import NewDeckForm from "./NewDeckForm";
+import DeckBlock from "./DeckBlock";
 
 const DecksTopSection = ({ createDeck, toggleAddingDeck, addingDeck }) => {
   return (
@@ -15,7 +15,7 @@ const DecksTopSection = ({ createDeck, toggleAddingDeck, addingDeck }) => {
         <GreenButton onClick={toggleAddingDeck}>NEW DECK</GreenButton>
       )}
       {addingDeck && (
-        <NewDeckForm
+        <DeckBlock
           createDeck={createDeck}
           toggleAddingDeck={toggleAddingDeck}
         />

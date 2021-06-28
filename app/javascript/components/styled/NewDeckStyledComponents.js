@@ -7,7 +7,7 @@ const NewDeckHeader = styled.header`
   grid-template-columns: auto 1fr;
 `;
 
-const NewDeckTile = styled.div`
+const DeckBlockContainer = styled.div`
   width: 36rem;
   display: grid;
   grid-template-rows: auto 1fr;
@@ -52,7 +52,7 @@ const VisibilitySelect = styled.select`
 
 export {
   NewDeckHeader,
-  NewDeckTile,
+  DeckBlockContainer,
   TitleInput,
   LeftLabel,
   TopLabel,
