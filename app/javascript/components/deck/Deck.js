@@ -6,6 +6,7 @@ import DeckForm from "./DeckForm";
 import styled from "styled-components";
 import Cards from "./Cards";
 import DeckLoadingMessage from "./DeckLoadingMessage";
+import { parseDeck } from "../utility/Parsers";
 
 const DeckContainer = styled.div`
   width: 80%;
@@ -39,12 +40,12 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
       .get(`/api/decks/${id}`)
       .then((response) => {
         clearErrors();
-        setDeck(response.data.data.attributes);
-        setCardIds(
-          response.data.data.relationships.cards.data.map((card) => {
-            return card.id;
-          })
+        const parsedDeck = parseDeck(
+          response.data.data,
+          response.data.included
         );
+        setDeck(parsedDeck);
+        setCardIds(parsedDeck.cards.map((card) => card.id));
       })
       .catch(() =>
         pushError(`Deck with id ${id} does not exist or could not be accessed`)

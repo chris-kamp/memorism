@@ -3,10 +3,7 @@ import axios from "axios";
 import DeckTilesContainer from "./deck/DeckTilesContainer";
 import DeckTile from "./deck/DeckTile";
 import DecksTopSection from "./deck/DecksTopSection";
-import {
-  parseDeck,
-  parseDecks,
-} from "./utility/Parsers";
+import { parseDeck, parseDecks } from "./utility/Parsers";
 
 const Decks = ({ pushError, clearErrors }) => {
   const [decks, setDecks] = useState([]);
