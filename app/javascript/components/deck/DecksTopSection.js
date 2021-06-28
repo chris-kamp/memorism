@@ -3,21 +3,22 @@ import { GreenButton, RedButton } from "../styled/ButtonStyledComponents";
 import { TopSection, TopHeading } from "../styled/DeckStyledComponents";
 import DeckBlock from "./DeckBlock";
 
-const DecksTopSection = ({ createDeck, toggleAddingDeck, addingDeck }) => {
+const DecksTopSection = ({ formAction, toggleForm, addingDeck }) => {
   return (
     <TopSection>
       <TopHeading>DECKS</TopHeading>
       {addingDeck ? (
-        <RedButton onClick={toggleAddingDeck} style={{ marginBottom: "1rem" }}>
+        <RedButton onClick={toggleForm} style={{ marginBottom: "1rem" }}>
           CANCEL
         </RedButton>
       ) : (
-        <GreenButton onClick={toggleAddingDeck}>NEW DECK</GreenButton>
+        <GreenButton onClick={toggleForm}>NEW DECK</GreenButton>
       )}
       {addingDeck && (
         <DeckBlock
-          createDeck={createDeck}
-          toggleAddingDeck={toggleAddingDeck}
+          formAction={formAction}
+          toggleForm={toggleForm}
+          editable={true}
         />
       )}
     </TopSection>

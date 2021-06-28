@@ -1,16 +1,15 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import DeckDetails from "./DeckDetails";
-import DeckForm from "./DeckForm";
 import styled from "styled-components";
 import Cards from "./Cards";
 import DeckLoadingMessage from "./DeckLoadingMessage";
 import { parseDeck } from "../utility/Parsers";
+import DeckTopSection from "./DeckTopSection";
 
 const DeckContainer = styled.div`
   width: 80%;
-  max-width: 1024px;
+  max-width: 1280px;
   margin: 0 auto;
   @media (max-width: 640px) {
     width: 95%;
@@ -164,16 +163,8 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
       {/* If not loading and deck object not empty, display deck page */}
       {!loading && !isEmpty(deck) && (
         <>
-          {/* Render deck details display or edit form depending on whether deck is currently being edited */}
-          {editable ? (
-            <DeckForm
-              deck={deck}
-              toggleEditable={toggleEditable}
-              editDeck={editDeck}
-            />
-          ) : (
-            <DeckDetails deck={deck} toggleEditable={toggleEditable} />
-          )}
+          {/* Render deck block */}
+          <DeckTopSection toggleForm={toggleEditable} editable={editable} />
           <Cards
             addingCard={addingCard}
             toggleAddingCard={toggleAddingCard}

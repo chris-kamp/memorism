@@ -32,13 +32,16 @@ const TileHeader = styled.header`
   position: relative;
 `;
 
-const TileHeading = styled.h2`
+const BlockHeading = styled.h2`
   display: inline-block;
   width: auto;
-  text-decoration: underline;
   margin: 0 auto;
   font-size: 1.5rem;
   font-weight: bold;
+`
+
+const TileHeading = styled(BlockHeading)`
+  text-decoration: underline;
   transition: transform 0.1s;
   &:hover {
     transform: scale(1.03);
@@ -86,4 +89,5 @@ export {
   GridContainer,
   TopSection,
   TopHeading,
+  BlockHeading,
 };

@@ -102,8 +102,8 @@ const Decks = ({ pushError, clearErrors }) => {
   return (
     <>
       <DecksTopSection
-        createDeck={createDeck}
-        toggleAddingDeck={toggleAddingDeck}
+        formAction={createDeck}
+        toggleForm={toggleAddingDeck}
         addingDeck={addingDeck}
       />
       {loaded && (

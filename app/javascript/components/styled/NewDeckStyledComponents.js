@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const NewDeckHeader = styled.header`
+const DeckFormHeader = styled.header`
   background-color: #6080bf;
   padding: 0.5rem;
   display: grid;
@@ -51,7 +51,7 @@ const VisibilitySelect = styled.select`
 `;
 
 export {
-  NewDeckHeader,
+  DeckFormHeader,
   DeckBlockContainer,
   TitleInput,
   LeftLabel,
