@@ -19,8 +19,8 @@ const DecksTopSection = ({ formAction, toggleForm, addingDeck }) => {
           formAction={formAction}
           toggleForm={toggleForm}
           editable={true}
-          // Deck with empty cards array required to correctly display card count in new deck creation form
-          deck={{cards: []}}
+          // Deck with empty properties required to set default values in new deck form
+          deck={{ cards: [], title: "", description: "", public: true }}
         />
       )}
     </TopSection>

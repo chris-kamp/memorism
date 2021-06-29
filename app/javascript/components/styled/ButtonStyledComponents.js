@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const ButtonContainer = styled.div`
+const CornerButtonContainer = styled.div`
   position: absolute;
   right: 0.1rem;
   top: 0.1rem;
@@ -37,7 +37,7 @@ const GreenButton = styled(LeftButton)`
 `;
 
 export {
-  ButtonContainer,
+  CornerButtonContainer,
   Button,
   LeftButton,
   RedButton,

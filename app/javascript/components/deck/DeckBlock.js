@@ -6,9 +6,16 @@ import {
   TileSpan,
   BlockHeading,
   TileHeader,
-  TilePara
+  TilePara,
 } from "../styled/DeckStyledComponents";
-import { DeckFormHeader, DeckBlockContainer } from "../styled/NewDeckStyledComponents";
+import {
+  DeckFormHeader,
+  DeckBlockContainer,
+} from "../styled/NewDeckStyledComponents";
+import {
+  CornerButtonContainer,
+  YellowButton,
+} from "../styled/ButtonStyledComponents";
 import DeckTitleField from "./form/DeckTitleField";
 import DeckVisibilityField from "./form/DeckVisibilityField";
 import DeckDescriptionField from "./form/DeckDescriptionField";
@@ -16,14 +23,15 @@ import DeckButtons from "./form/DeckButtons";
 import DeckCardsSpan from "./DeckCardsSpan";
 
 const DeckBlock = ({ formAction, toggleForm, editable, deck }) => {
-
   // react-hook-form setup
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: { ...deck, isPublic: deck.public },
+  });
 
   // Callback function to run when new deck form is submitted
   const onFormSubmit = (data) => {
@@ -47,45 +55,58 @@ const DeckBlock = ({ formAction, toggleForm, editable, deck }) => {
     <DeckBlockContainer>
       {/* New deck form. Individual fields reference this by id. */}
       {editable && <form onSubmit={handleSubmit(onFormSubmit)} id="deckForm" />}
-      
-        {/* Title text input field for the deck form */}
-        {editable ? (<DeckFormHeader><DeckTitleField
-          formId="deckForm"
-          fieldId="deckFormTitle"
-          required={true}
-          register={register}
-          errors={errors}
-        /></DeckFormHeader>) : (
-          <TileHeader>
-            <BlockHeading>{deck.title}</BlockHeading>
-            <TileSpan>{deck.user.username}</TileSpan>
-          </TileHeader>
-        )}
-      
+
+      {/* Title text input field for the deck form */}
+      {editable ? (
+        <DeckFormHeader>
+          <DeckTitleField
+            formId="deckForm"
+            fieldId="deckFormTitle"
+            required={true}
+            register={register}
+            errors={errors}
+          />
+        </DeckFormHeader>
+      ) : (
+        <TileHeader>
+          <BlockHeading>{deck.title}</BlockHeading>
+          <TileSpan>{deck.user.username}</TileSpan>
+          <CornerButtonContainer>
+            <YellowButton onClick={toggleForm}>E</YellowButton>
+          </CornerButtonContainer>
+        </TileHeader>
+      )}
+
       <TileBody>
         <TileSubheader>
           <DeckCardsSpan deck={deck} />
           {/* Visibility select field for the deck form */}
-          {editable ? (<DeckVisibilityField
-            formId="deckForm"
-            fieldId="deckFormVisibility"
-            register={register}
-            errors={errors}
-          />) : (
-            <TileSpan>{deck.visibility}</TileSpan>
+          {editable ? (
+            <DeckVisibilityField
+              formId="deckForm"
+              fieldId="deckFormVisibility"
+              register={register}
+              errors={errors}
+            />
+          ) : (
+            <TileSpan>{deck.public ? "Public" : "Private"}</TileSpan>
           )}
         </TileSubheader>
         {/* Description textarea field for the deck form */}
-        {editable? (<DeckDescriptionField
-          formId="deckForm"
-          fieldId="deckFormDescription"
-          register={register}
-          errors={errors}
-        />) : (
+        {editable ? (
+          <DeckDescriptionField
+            formId="deckForm"
+            fieldId="deckFormDescription"
+            register={register}
+            errors={errors}
+          />
+        ) : (
           <TilePara>{deck.description}</TilePara>
         )}
         {/* Submit and cancel buttons for the deck form */}
-        {editable && <DeckButtons formId="deckForm" handleCancel={toggleForm} />}
+        {editable && (
+          <DeckButtons formId="deckForm" handleCancel={toggleForm} />
+        )}
       </TileBody>
     </DeckBlockContainer>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  ButtonContainer,
+  CornerButtonContainer,
   RedButton,
   YellowButton,
   GreenButton,
@@ -8,7 +8,7 @@ import {
 
 const CardButtons = ({ editable, handleToggle, deleteCard, id, formId }) => {
   return (
-    <ButtonContainer>
+    <CornerButtonContainer>
       {editable ? (
         <>
           <GreenButton as="input" type="submit" value="Confirm" form={formId} />
@@ -26,7 +26,7 @@ const CardButtons = ({ editable, handleToggle, deleteCard, id, formId }) => {
           </RedButton>
         </>
       )}
-    </ButtonContainer>
+    </CornerButtonContainer>
   );
 };
 

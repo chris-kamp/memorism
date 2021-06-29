@@ -1,7 +1,6 @@
 import React from "react";
 import {
-  ButtonContainer,
-  YellowButton,
+  CornerButtonContainer,
   RedButton,
 } from "../styled/ButtonStyledComponents";
 import { Link } from "react-router-dom";
@@ -29,9 +28,9 @@ const DeckTile = ({ deck, removeDeck }) => {
           <TileHeading className="m-0">{deck.title}</TileHeading>
         </Link>
         <TileSpan>{deck.user.username}</TileSpan>
-        <ButtonContainer>
+        <CornerButtonContainer>
           <RedButton onClick={(() => removeDeck(deck.id))}>X</RedButton>
-        </ButtonContainer>
+        </CornerButtonContainer>
       </TileHeader>
       <TileBody>
         <TileSubheader>
