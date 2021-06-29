@@ -38,15 +38,19 @@ const DeckBlock = ({ formAction, toggleForm, editable }) => {
     });
   };
 
+  // **************
+  //    RENDER
+  // **************
+
   return (
     <DeckBlockContainer>
       {/* New deck form. Individual fields reference this by id. */}
-      {editable && <form onSubmit={handleSubmit(onFormSubmit)} id="newDeckForm" />}
+      {editable && <form onSubmit={handleSubmit(onFormSubmit)} id="deckForm" />}
       
         {/* Title text input field for the deck form */}
         {editable ? (<DeckFormHeader><DeckTitleField
-          formId="newDeckForm"
-          fieldId="newDeckTitle"
+          formId="deckForm"
+          fieldId="deckFormTitle"
           required={true}
           register={register}
           errors={errors}
@@ -62,8 +66,8 @@ const DeckBlock = ({ formAction, toggleForm, editable }) => {
           <TileSpan>CARDS</TileSpan>
           {/* Visibility select field for the deck form */}
           {editable ? (<DeckVisibilityField
-            formId="newDeckForm"
-            fieldId="isPublic"
+            formId="deckForm"
+            fieldId="deckFormVisibility"
             register={register}
             errors={errors}
           />) : (
@@ -72,15 +76,15 @@ const DeckBlock = ({ formAction, toggleForm, editable }) => {
         </TileSubheader>
         {/* Description textarea field for the deck form */}
         {editable? (<DeckDescriptionField
-          formId="newDeckForm"
-          fieldId="description"
+          formId="deckForm"
+          fieldId="deckFormDescription"
           register={register}
           errors={errors}
         />) : (
           <TilePara>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempora, accusantium amet vel officiis, eos impedit iusto reiciendis quis culpa repudiandae, tenetur repellat exercitationem rerum. Culpa alias veritatis eius asperiores incidunt. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum iste id molestiae perspiciatis eum commodi aliquam, perferendis earum incidunt quos autem quas, libero aperiam, dicta omnis quaerat. Mollitia, porro facilis.</TilePara>
         )}
         {/* Submit and cancel buttons for the deck form */}
-        {editable && <DeckButtons formId="newDeckForm" handleCancel={toggleForm} />}
+        {editable && <DeckButtons formId="deckForm" handleCancel={toggleForm} />}
       </TileBody>
     </DeckBlockContainer>
   );

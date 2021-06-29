@@ -7,7 +7,7 @@ import {
 const DeckDescriptionField = ({ formId, fieldId, register, errors }) => {
   return (
     <>
-      <TopLabel htmlFor="description">Description:</TopLabel>
+      <TopLabel htmlFor={fieldId}>Description:</TopLabel>
       <div style={{ marginBottom: "0.5rem" }}>
         <DescriptionTextArea
           id={fieldId}

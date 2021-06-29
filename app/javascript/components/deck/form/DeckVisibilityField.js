@@ -6,7 +6,7 @@ import {
 const DeckVisibilityField = ({ formId, fieldId, register }) => {
   return (
     <div>
-      <LeftLabel htmlFor="isPublic">Visibility: </LeftLabel>
+      <LeftLabel htmlFor={fieldId}>Visibility: </LeftLabel>
       <VisibilitySelect
         id={fieldId}
         {...register("isPublic")}

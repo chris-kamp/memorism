@@ -6,7 +6,7 @@ import { TitleInput, TitleLabel } from "../../styled/NewDeckStyledComponents";
 const DeckTitleField = ({ formId, fieldId, required, register, errors }) => {
   return (
     <>
-      <TitleLabel htmlFor="newDeckTitle">TITLE:</TitleLabel>
+      <TitleLabel htmlFor={fieldId}>TITLE:</TitleLabel>
       <div>
         <TitleInput
           id={fieldId}
