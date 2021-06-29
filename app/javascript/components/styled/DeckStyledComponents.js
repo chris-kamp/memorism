@@ -36,7 +36,7 @@ const BlockHeading = styled.h2`
   display: inline-block;
   width: auto;
   margin: 0 auto;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
 `
 

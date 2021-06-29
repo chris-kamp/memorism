@@ -40,7 +40,7 @@ const Main = ({ user }) => {
       <Topnav user={user} />
       <FlashError errors={errors} />
       <FlashAlert alerts={alerts} />
-      <main style={{ padding: "0.5rem" }}>
+      <main style={{ padding: "0.5rem", width: "100%" }}>
         <Switch>
           <Route exact path="/">
             <Decks pushError={pushError} clearErrors={clearErrors} />
