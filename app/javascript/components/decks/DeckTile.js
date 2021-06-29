@@ -11,8 +11,8 @@ import {
   TileSpan,
   TileBody,
   TileSubheader,
-  TilePara,
 } from "../styled/DeckStyledComponents";
+import {TilePara} from "../styled/SharedStyledComponents"
 import DeckCardsSpan from "./DeckCardsSpan";
 
 const truncate = (str, len) => str.length > len ? str.substring(0, len) + "..." : str;

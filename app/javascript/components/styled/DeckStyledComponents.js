@@ -57,11 +57,6 @@ const TileSubheader = styled.div`
   justify-content: space-between;
 `;
 
-const TilePara = styled.p`
-  margin: 0;
-  overflow-wrap: anywhere;
-`;
-
 const GridContainer = styled.div`
   max-width: 1280px;
   display: grid;
@@ -78,7 +73,6 @@ export {
   TileSpan,
   TileBody,
   TileSubheader,
-  TilePara,
   GridContainer,
   TopSection,
   BlockHeading,

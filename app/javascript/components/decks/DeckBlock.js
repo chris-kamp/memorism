@@ -6,7 +6,7 @@ import {
   TileSpan,
   BlockHeading,
   TileHeader,
-  TilePara,
+  
 } from "../styled/DeckStyledComponents";
 import {
   DeckFormHeader,
@@ -16,6 +16,7 @@ import {
   CornerButtonContainer,
   YellowButton,
 } from "../styled/ButtonStyledComponents";
+import {TilePara} from "../styled/SharedStyledComponents"
 import DeckTitleField from "./form/DeckTitleField";
 import DeckVisibilityField from "./form/DeckVisibilityField";
 import DeckDescriptionField from "./form/DeckDescriptionField";

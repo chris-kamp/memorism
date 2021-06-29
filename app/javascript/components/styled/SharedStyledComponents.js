@@ -14,4 +14,9 @@ const TopHeading = styled.h1`
   font-size: 4rem;
 `;
 
-export { ErrorPara, TopHeading };
+const TilePara = styled.p`
+  margin: 0;
+  overflow-wrap: anywhere;
+`;
+
+export { ErrorPara, TopHeading, TilePara };
