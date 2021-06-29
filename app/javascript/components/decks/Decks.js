@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DeckTilesContainer from "./decks/DeckTilesContainer";
-import DeckTile from "./decks/DeckTile";
-import DecksTopSection from "./decks/DecksTopSection";
-import { parseDeck, parseDecks } from "./utility/Parsers";
+import DeckTilesContainer from "./DeckTilesContainer";
+import DeckTile from "./DeckTile";
+import DecksTopSection from "./DecksTopSection";
+import { parseDeck, parseDecks } from "../utility/Parsers";
 
 const Decks = ({ pushError, clearErrors }) => {
   const [decks, setDecks] = useState([]);

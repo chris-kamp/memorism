@@ -1,6 +1,7 @@
 import React from "react";
 import { GreenButton, RedButton } from "../styled/ButtonStyledComponents";
-import { TopSection, TopHeading } from "../styled/DeckStyledComponents";
+import { TopSection } from "../styled/DeckStyledComponents";
+import {TopHeading} from "../styled/SharedStyledComponents"
 import DeckBlock from "./DeckBlock";
 
 const DecksTopSection = ({ formAction, toggleForm, addingDeck }) => {

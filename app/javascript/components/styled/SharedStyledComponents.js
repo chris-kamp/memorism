@@ -7,4 +7,11 @@ const ErrorPara = styled.p`
   font-weight: bold;
 `
 
-export { ErrorPara };
+const TopHeading = styled.h1`
+  text-align: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
+  font-size: 4rem;
+`;
+
+export { ErrorPara, TopHeading };

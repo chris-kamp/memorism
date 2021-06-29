@@ -1,6 +1,7 @@
 import React from "react";
 import DeckBlock from "./DeckBlock";
-import { TopSection, TopHeading } from "../styled/DeckStyledComponents";
+import { TopSection } from "../styled/DeckStyledComponents";
+import {TopHeading} from "../styled/SharedStyledComponents"
 
 const DeckTopSection = ({ toggleForm, editable, deck, editDeck }) => {
   return (

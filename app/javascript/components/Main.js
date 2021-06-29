@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Deck from "./decks/Deck";
-import Decks from "./Decks";
+import Decks from "./decks/Decks";
 import { hot } from "react-hot-loader";
 import {
   BrowserRouter as Router,
@@ -12,6 +12,7 @@ import Topnav from "./topnav/Topnav";
 import "../styles/style.css";
 import FlashAlert from "./alerts/FlashAlert";
 import FlashError from "./alerts/FlashError";
+import Review from "./review/Review";
 
 const Main = ({ user }) => {
   const [alerts, setAlerts] = useState([]);
@@ -53,6 +54,9 @@ const Main = ({ user }) => {
               pushError={pushError}
               clearErrors={clearErrors}
             />
+          </Route>
+          <Route exact path="/decks/:id/review">
+            <Review />
           </Route>
         </Switch>
       </main>

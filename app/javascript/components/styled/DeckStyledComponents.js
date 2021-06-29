@@ -9,13 +9,6 @@ const TopSection = styled.section`
   margin-bottom: 1rem;
 `;
 
-const TopHeading = styled.h1`
-  text-align: center;
-  margin-bottom: 2rem;
-  font-weight: bold;
-  font-size: 4rem;
-`;
-
 const Tile = styled.section`
   width: 24rem;
   height: 12rem;
@@ -88,6 +81,5 @@ export {
   TilePara,
   GridContainer,
   TopSection,
-  TopHeading,
   BlockHeading,
 };
