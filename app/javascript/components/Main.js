@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Deck from "./deck/Deck";
+import Deck from "./decks/Deck";
 import Decks from "./Decks";
 import { hot } from "react-hot-loader";
 import {
@@ -10,10 +10,8 @@ import {
 } from "react-router-dom";
 import Topnav from "./topnav/Topnav";
 import "../styles/style.css";
-import FlashAlert from "./shared/FlashAlert";
-import FlashError from "./shared/FlashError";
-import DeckTile from "./deck/DeckTile";
-import DeckTilesContainer from "./deck/DeckTilesContainer";
+import FlashAlert from "./alerts/FlashAlert";
+import FlashError from "./alerts/FlashError";
 
 const Main = ({ user }) => {
   const [alerts, setAlerts] = useState([]);
@@ -55,18 +53,6 @@ const Main = ({ user }) => {
               pushError={pushError}
               clearErrors={clearErrors}
             />
-          </Route>
-          {/* TEST: */}
-          <Route exact path="/test">
-            <DeckTilesContainer>
-              <DeckTile />
-              <DeckTile />
-              <DeckTile />
-              <DeckTile />
-              <DeckTile />
-              <DeckTile />
-              <DeckTile />
-            </DeckTilesContainer>
           </Route>
         </Switch>
       </main>

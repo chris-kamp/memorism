@@ -9,7 +9,7 @@ const CardContainer = styled.div`
 
 const CardSectionLeft = styled.div`
   width: 50%;
-  border-right: 2px solid #8BB4D9;
+  border-right: 2px solid #324759;
 `;
 
 const CardSectionRight = styled(CardSectionLeft)`

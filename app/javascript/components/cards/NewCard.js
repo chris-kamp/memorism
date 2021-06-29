@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import CardFormInput from "./CardFormInput";
-import CardButtons from "./CardButtons";
+import CardFormInput from "../cards/CardFormInput";
+import CardButtons from "../cards/CardButtons";
 import {
   CardContainer,
   CardSectionLeft,
@@ -9,7 +9,7 @@ import {
   CardSectionHeader,
   CardSectionHeading,
   CardSectionBody,
-} from "./styled/CardStyledComponents";
+} from "../styled/CardStyledComponents";
 
 const NewCard = ({ createCard, toggleAddingCard, id }) => {
   const cardData = {

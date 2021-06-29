@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Cards from "./Cards";
-import DeckLoadingMessage from "./DeckLoadingMessage";
 import { parseDeck } from "../utility/Parsers";
 import DeckTopSection from "./DeckTopSection";
 
@@ -158,9 +157,7 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
 
   return (
     <DeckContainer>
-      {/* Display loading message while loading */}
-      {loading && <DeckLoadingMessage />}
-      {/* If not loading and deck object not empty, display deck page */}
+      {/* If not loading and deck object not empty, display deck */}
       {!loading && !isEmpty(deck) && (
         <>
           {/* Render deck block */}

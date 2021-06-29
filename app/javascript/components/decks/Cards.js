@@ -1,6 +1,6 @@
 import React from "react";
-import Card from "../card/Card";
-import NewCard from "../card/NewCard";
+import Card from "../cards/Card";
+import NewCard from "../cards/NewCard";
 import { GreenButton } from "../styled/ButtonStyledComponents"
 
 

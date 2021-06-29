@@ -19,7 +19,7 @@ import {
 import DeckTitleField from "./form/DeckTitleField";
 import DeckVisibilityField from "./form/DeckVisibilityField";
 import DeckDescriptionField from "./form/DeckDescriptionField";
-import DeckButtons from "./form/DeckButtons";
+import DeckFormButtons from "./form/DeckFormButtons";
 import DeckCardsSpan from "./DeckCardsSpan";
 
 const DeckBlock = ({ formAction, toggleForm, editable, deck }) => {
@@ -105,7 +105,7 @@ const DeckBlock = ({ formAction, toggleForm, editable, deck }) => {
         )}
         {/* Submit and cancel buttons for the deck form */}
         {editable && (
-          <DeckButtons formId="deckForm" handleCancel={toggleForm} />
+          <DeckFormButtons formId="deckForm" handleCancel={toggleForm} />
         )}
       </TileBody>
     </DeckBlockContainer>

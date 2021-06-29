@@ -6,7 +6,7 @@ import {
 } from "../../styled/ButtonStyledComponents";
 
 
-const DeckButtons = ({formId, handleCancel }) => {
+const DeckFormButtons = ({formId, handleCancel }) => {
   return (
     <CenteredButtonContainer>
       <GreenButton
@@ -22,4 +22,4 @@ const DeckButtons = ({formId, handleCancel }) => {
   );
 };
 
-export default DeckButtons;
+export default DeckFormButtons;

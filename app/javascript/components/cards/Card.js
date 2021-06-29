@@ -10,7 +10,7 @@ import {
   CardSectionHeader,
   CardSectionHeading,
   CardSectionBody,
-} from "./styled/CardStyledComponents"
+} from "../styled/CardStyledComponents"
 
 const Card = ({ id, deleteCard, clearErrors, pushError }) => {
   const [cardData, setCardData] = useState(null);
