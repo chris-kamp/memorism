@@ -14,6 +14,7 @@ import {
   TileSubheader,
   TilePara,
 } from "../styled/DeckStyledComponents";
+import DeckCardsSpan from "./DeckCardsSpan";
 
 const truncate = (str, len) => str.length > len ? str.substring(0, len) + "..." : str;
 
@@ -34,7 +35,7 @@ const DeckTile = ({ deck, removeDeck }) => {
       </TileHeader>
       <TileBody>
         <TileSubheader>
-          <TileSpan>{deck.cards.length} {deck.cards.length === 1 ? "card" : "cards"}</TileSpan>
+          <DeckCardsSpan deck={deck} />
           <TileSpan>{deck.public ? "Public" : "Private"}</TileSpan>
         </TileSubheader>
         <TilePara>

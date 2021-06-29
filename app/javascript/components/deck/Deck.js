@@ -164,7 +164,7 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
       {!loading && !isEmpty(deck) && (
         <>
           {/* Render deck block */}
-          <DeckTopSection toggleForm={toggleEditable} editable={editable} />
+          <DeckTopSection toggleForm={toggleEditable} editable={editable} deck={deck} />
           <Cards
             addingCard={addingCard}
             toggleAddingCard={toggleAddingCard}
