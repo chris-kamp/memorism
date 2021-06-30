@@ -109,6 +109,29 @@ const Review = ({ pushError, clearErrors, pushAlert, clearAlerts }) => {
     loading ? pushAlert("Loading...") : clearAlerts();
   }, [loading]);
 
+  // Listen for keypresses to navigate through deck and flip card
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeypress)
+    return () => {window.removeEventListener("keydown", handleKeypress)}
+  }, [deck, visibleSide, currentCardIndex])
+
+  // Handle a keypress, destructuring the key code from the event
+  const handleKeypress = ({code}) => {
+    switch (code) {
+      case "ArrowLeft":
+        prevCard();
+        break
+      case "ArrowRight":
+        nextCard();
+        break
+      case "Space":
+      case "ArrowUp":
+      case "ArrowDown":
+        flipCard();
+        break
+    }
+  }
+
   const prevCard = () => {
     if (currentCardIndex > 0) {
       setCurrentCardIndex(currentCardIndex - 1)
