@@ -36,6 +36,10 @@ const GreenButton = styled(LeftButton)`
   background-color: green;
 `;
 
+const BlueButton = styled(Button)`
+  background-color: #5075BF;
+`;
+
 export {
   CornerButtonContainer,
   Button,
@@ -43,5 +47,6 @@ export {
   RedButton,
   YellowButton,
   GreenButton,
+  BlueButton,
   CenteredButtonContainer,
 };

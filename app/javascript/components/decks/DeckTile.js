@@ -12,12 +12,20 @@ import {
   TileBody,
   TileSubheader,
 } from "../styled/DeckStyledComponents";
-import {TilePara} from "../styled/SharedStyledComponents"
+import {
+  CenteredButtonContainer,
+  BlueButton,
+} from "../styled/ButtonStyledComponents";
+import { useHistory } from "react-router-dom";
+import { TilePara } from "../styled/SharedStyledComponents";
 import DeckCardsSpan from "./DeckCardsSpan";
 
-const truncate = (str, len) => str.length > len ? str.substring(0, len) + "..." : str;
+const truncate = (str, len) =>
+  str.length > len ? str.substring(0, len) + "..." : str;
 
 const DeckTile = ({ deck, removeDeck }) => {
+  const history = useHistory();
+
   return (
     <Tile>
       <TileHeader>
@@ -29,7 +37,7 @@ const DeckTile = ({ deck, removeDeck }) => {
         </Link>
         <TileSpan>{deck.user.username}</TileSpan>
         <CornerButtonContainer>
-          <RedButton onClick={(() => removeDeck(deck.id))}>X</RedButton>
+          <RedButton onClick={() => removeDeck(deck.id)}>X</RedButton>
         </CornerButtonContainer>
       </TileHeader>
       <TileBody>
@@ -37,12 +45,7 @@ const DeckTile = ({ deck, removeDeck }) => {
           <DeckCardsSpan deck={deck} />
           <TileSpan>{deck.public ? "Public" : "Private"}</TileSpan>
         </TileSubheader>
-        <TilePara>
-          {truncate(
-            deck.description,
-            100
-          )}
-        </TilePara>
+        <TilePara>{truncate(deck.description, 100)}</TilePara>
       </TileBody>
     </Tile>
   );
