@@ -56,7 +56,12 @@ const Main = ({ user }) => {
             />
           </Route>
           <Route exact path="/decks/:id/review">
-            <Review />
+            <Review
+              pushAlert={pushAlert}
+              clearAlerts={clearAlerts}
+              pushError={pushError}
+              clearErrors={clearErrors}
+            />
           </Route>
         </Switch>
       </main>

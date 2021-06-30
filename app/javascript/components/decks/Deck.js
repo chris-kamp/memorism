@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Cards from "./Cards";
 import { parseDeck } from "../utility/Parsers";
+import { isEmpty } from "../utility/Utils";
 import DeckTopSection from "./DeckTopSection";
 
 const DeckContainer = styled.div`
@@ -28,9 +29,6 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
   const [addingCard, setAddingCard] = useState(false);
   // Track whether page is loading, initially true
   const [loading, setLoading] = useState(true);
-
-  // Helper function to check if object is empty
-  const isEmpty = (obj) => Object.keys(obj).length === 0;
 
   // Get the deck with the ID obtained from URL params
   useEffect(() => {
@@ -161,7 +159,12 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
       {!loading && !isEmpty(deck) && (
         <>
           {/* Render deck block */}
-          <DeckTopSection toggleForm={toggleEditable} editable={editable} deck={deck} editDeck={editDeck} />
+          <DeckTopSection
+            toggleForm={toggleEditable}
+            editable={editable}
+            deck={deck}
+            editDeck={editDeck}
+          />
           <Cards
             addingCard={addingCard}
             toggleAddingCard={toggleAddingCard}
