@@ -1,0 +1,61 @@
+.devise {
+  background-color: #324759;
+  min-height: 100vh;
+  color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  #error_explanation,
+  .alert {
+    color: red;
+  }
+  .devise-header {
+    margin-bottom: 3rem;
+  }
+  .devise-heading {
+    font-size: 4rem;
+  }
+  form {
+    display: grid;
+    row-gap: 1rem;
+  }
+  .field {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    row-gap: 1rem;
+  }
+  label {
+    width: 7rem;
+    font-weight: bold;
+  }
+  input {
+    height: 2rem;
+  }
+  .field-container {
+    display: flex;
+    align-items: center;
+  }
+  .actions {
+    display: flex;
+    justify-content: center;
+    input {
+      border: none;
+      text-align: center;
+      border-radius: 0.25rem;
+      font-weight: bold;
+      color: #fdfdff;
+      height: 1.7rem;
+      background-color: green;
+      margin-right: 2rem;
+    }
+    a {
+      text-decoration: none;
+      background-color: #5075bf;
+      color: #f5f5f5;
+      padding: 0.1rem 0.3rem;
+      border-radius: 0.25rem;
+      font-weight: bold;
+    }
+  }
+}
