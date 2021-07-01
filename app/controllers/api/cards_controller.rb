@@ -7,7 +7,7 @@ module Api
     end
 
     def create
-      if user_signed_in?
+      if user_signed_in? && Deck.find(params[:deck_id]).user == current_user
         @card = Card.new(card_params)
         if @card.save
           render json: CardSerializer.new(@card).serializable_hash.to_json
@@ -20,7 +20,7 @@ module Api
     end
 
     def destroy
-      if user_signed_in?
+      if user_signed_in? && @card.deck.user == current_user
         if @card.destroy
           head :no_content
         else
@@ -32,7 +32,7 @@ module Api
     end
 
     def update
-      if user_signed_in?
+      if user_signed_in? && @card.deck.user == current_user
         if @card.update(card_params)
           render json:
                    CardSerializer.new(@card).serializable_hash.to_json

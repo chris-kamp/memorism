@@ -108,13 +108,13 @@ const Review = ({ pushError, clearErrors, pushAlert, clearAlerts }) => {
   return (
     <>
       <ReviewTitle />
-      <CenteredButtonContainer style={{ margin: "2rem 0" }}>
+      {!loading && !isEmpty(deck) && <CenteredButtonContainer style={{ margin: "2rem 0" }}>
         <BlueButton onClick={() => history.push(`/decks/${deck.id}`)}>
           BACK TO DECK
         </BlueButton>
-      </CenteredButtonContainer>
+      </CenteredButtonContainer>}
       {/* Display instructions unless closed or deck is empty */}
-      {showInstructions && !loading && deck.cards.length > 0 && (
+      {showInstructions && !loading && !isEmpty(deck) && deck.cards.length > 0 && (
         <ReviewInstructions {...{ closeInstructions }} />
       )}
       {!loading &&
