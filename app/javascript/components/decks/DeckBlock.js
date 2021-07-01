@@ -48,10 +48,6 @@ const DeckBlock = ({ formAction, toggleForm, editable, deck }) => {
     });
   };
 
-  // **************
-  //    RENDER
-  // **************
-
   return (
     <DeckBlockContainer>
       {/* New deck form. Individual fields reference this by id. */}
