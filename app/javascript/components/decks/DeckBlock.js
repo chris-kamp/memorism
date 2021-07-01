@@ -63,7 +63,6 @@ const DeckBlock = ({ formAction, toggleForm, editable, deck }) => {
           <DeckTitleField
             formId="deckForm"
             fieldId="deckFormTitle"
-            required={true}
             register={register}
             errors={errors}
           />

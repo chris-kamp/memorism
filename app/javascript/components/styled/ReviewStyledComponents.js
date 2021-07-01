@@ -37,7 +37,7 @@ const ReviewBlockHeader = styled.header`
 `;
 
 const ReviewBlockHeading = styled.h2`
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 0;
 `;

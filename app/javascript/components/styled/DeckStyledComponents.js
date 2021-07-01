@@ -29,13 +29,14 @@ const BlockHeading = styled.h2`
   display: inline-block;
   width: auto;
   margin: 0 auto;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: bold;
 `
 
 const TileHeading = styled(BlockHeading)`
   text-decoration: underline;
   transition: transform 0.1s;
+  font-size: 1.3rem;
   &:hover {
     transform: scale(1.01);
   }

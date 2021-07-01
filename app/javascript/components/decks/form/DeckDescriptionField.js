@@ -11,11 +11,14 @@ const DeckDescriptionField = ({ formId, fieldId, register, errors }) => {
       <div style={{ marginBottom: "0.5rem" }}>
         <DescriptionTextArea
           id={fieldId}
-          {...register("description", { required: true })}
+          {...register("description", { required: true, maxLength: 100 })}
           form={formId}
         />
-        {errors.description && (
+        {errors.description?.type === "required" && (
           <ErrorPara>Please provide a description</ErrorPara>
+        )}
+        {errors.description?.type === "maxLength" && (
+          <ErrorPara>Title must not exceed 100 characters</ErrorPara>
         )}
       </div>
     </>
