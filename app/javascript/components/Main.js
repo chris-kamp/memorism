@@ -9,7 +9,6 @@ import {
   useHistory,
 } from "react-router-dom";
 import Topnav from "./topnav/Topnav";
-import "../styles/style.css";
 import FlashAlert from "./alerts/FlashAlert";
 import FlashError from "./alerts/FlashError";
 import Review from "./review/Review";
