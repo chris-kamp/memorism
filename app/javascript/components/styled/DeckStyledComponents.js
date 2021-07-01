@@ -37,7 +37,7 @@ const TileHeading = styled(BlockHeading)`
   text-decoration: underline;
   transition: transform 0.1s;
   &:hover {
-    transform: scale(1.03);
+    transform: scale(1.01);
   }
 `;
 

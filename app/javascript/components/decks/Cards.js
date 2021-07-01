@@ -9,8 +9,8 @@ const Cards = ({ addingCard, toggleAddingCard, createCard, cardIds, deleteCard, 
   // Map card ids to Card components for rendering
   // For now, reverse so newest is first when adding cards
   const cardsList = cardIds
-    .map((cardId) => <Card id={cardId} key={cardId} deleteCard={deleteCard} pushError={pushError} clearErrors={clearErrors} />)
-    .reverse();
+    .sort((a, b) => b - a)
+    .map((cardId) => <Card id={cardId} key={cardId} deleteCard={deleteCard} pushError={pushError} clearErrors={clearErrors} />);
 
   return (
     <>

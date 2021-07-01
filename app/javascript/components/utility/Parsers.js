@@ -27,6 +27,8 @@ const parseCards = (data) =>
     back: cardData.attributes.back,
     front: cardData.attributes.front,
     deck_id: cardData.attributes.deck_id,
+    created_at: cardData.attributes.created_at,
+    updated_at: cardData.attributes.updated_at
   }));
 
 // Given deck data and included relationships from a response object, return a deck object in useable format
@@ -36,6 +38,8 @@ const parseDeck = (deckData, included) => ({
   description: deckData.attributes.description,
   public: deckData.attributes.public,
   user_id: deckData.attributes.user_id,
+  created_at: deckData.attributes.created_at,
+  updated_at: deckData.attributes.updated_at,
   user: parseUser(findUser(included, deckData.attributes.user_id)),
   cards: parseCards(findCards(deckData, included)),
 });

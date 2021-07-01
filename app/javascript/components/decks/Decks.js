@@ -4,11 +4,37 @@ import DeckTilesContainer from "./DeckTilesContainer";
 import DeckTile from "./DeckTile";
 import DecksTopSection from "./DecksTopSection";
 import { parseDeck, parseDecks } from "../utility/Parsers";
+import { generateSorter } from "../utility/Utils";
+import SortSelect from "../shared/SortSelect";
 
 const Decks = ({ pushError, clearErrors }) => {
   const [decks, setDecks] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [addingDeck, setAddingDeck] = useState(false);
+  const [sortBy, setSortBy] = useState("newest");
+
+  // Parameters to pass to generateSorter to generate a sorting function to sort decks in a given order
+  const sorters = {
+    title: {
+      attr: "title",
+      ascending: true,
+    },
+    newest: {
+      attr: "created_at",
+      ascending: false
+    },
+    updated: {
+      attr: "updated_at",
+      ascending: false
+    }
+  }
+
+  // Options for display in the dropdown select of sorting options, and their values
+  const sortingOptions = [
+    {display: "Title", value: "title"},
+    {display: "Newest", value: "newest"},
+    {display: "Recently updated", value: "updated"}
+  ]
 
   // Toggle state for whether the new deck creation form is open
   const toggleAddingDeck = () => setAddingDeck(!addingDeck);
@@ -106,9 +132,12 @@ const Decks = ({ pushError, clearErrors }) => {
         toggleForm={toggleAddingDeck}
         addingDeck={addingDeck}
       />
+      <SortSelect options={sortingOptions} value={sortBy} setSortBy={setSortBy} />
       {loaded && (
         <DeckTilesContainer>
-          {decks.map((deck) => {
+          {decks
+          .sort(generateSorter(sorters[sortBy]))
+          .map((deck) => {
             return (
               <DeckTile key={deck.id} deck={deck} removeDeck={removeDeck} />
             );
