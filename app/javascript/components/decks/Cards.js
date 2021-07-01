@@ -4,13 +4,13 @@ import NewCard from "../cards/NewCard";
 import { GreenButton } from "../styled/ButtonStyledComponents"
 
 
-const Cards = ({ addingCard, toggleAddingCard, createCard, cardIds, deleteCard, pushError, clearErrors }) => {
+const Cards = ({ addingCard, toggleAddingCard, createCard, cardIds, deleteCard, pushError, clearErrors, owned }) => {
 
   // Map card ids to Card components for rendering
   // For now, reverse so newest is first when adding cards
   const cardsList = cardIds
     .sort((a, b) => b - a)
-    .map((cardId) => <Card id={cardId} key={cardId} deleteCard={deleteCard} pushError={pushError} clearErrors={clearErrors} />);
+    .map((cardId) => <Card id={cardId} key={cardId} deleteCard={deleteCard} pushError={pushError} clearErrors={clearErrors} onwed={owned} />);
 
   return (
     <>

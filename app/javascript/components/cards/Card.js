@@ -12,7 +12,7 @@ import {
   CardSectionBody,
 } from "../styled/CardStyledComponents"
 
-const Card = ({ id, deleteCard, clearErrors, pushError }) => {
+const Card = ({ id, deleteCard, clearErrors, pushError, owned }) => {
   const [cardData, setCardData] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [editable, setEditable] = useState(false);
@@ -106,7 +106,7 @@ const Card = ({ id, deleteCard, clearErrors, pushError }) => {
           <CardSectionRight>
             <CardSectionHeader>
               <CardSectionHeading className="m-0">Back</CardSectionHeading>
-              <CardButtons editable={editable} handleToggle={toggleEditable} deleteCard={deleteCard} id={id} formId={`editCardForm${id}`} />
+              <CardButtons editable={editable} handleToggle={toggleEditable} deleteCard={deleteCard} id={id} formId={`editCardForm${id}`} owned={owned} />
             </CardSectionHeader>
             <CardSectionBody>
               {editable ? (

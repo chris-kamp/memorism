@@ -1,16 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
 import { LinkContainer } from 'react-router-bootstrap'
 
-const Topnav = ({user: userObj}) => {
-  // Initialise "user" state
-  const [user, setUser] = useState(null);
+const Topnav = ({user}) => {
 
-  // Parse Rails user object from JSON
-  useEffect(() => {
-    setUser(JSON.parse(userObj));
-  }, [userObj])
 
   return (
     <>

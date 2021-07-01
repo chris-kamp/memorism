@@ -16,7 +16,7 @@ const DeckContainer = styled.div`
   }
 `;
 
-const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
+const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors, user }) => {
   // Get deck id from URL params using a react-router-dom method
   const { id } = useParams();
   // Initialise deck as an empty object
@@ -29,6 +29,8 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
   const [addingCard, setAddingCard] = useState(false);
   // Track whether page is loading, initially true
   const [loading, setLoading] = useState(true);
+  const [owned, setOwned] = useState(false);
+
 
   // Get the deck with the ID obtained from URL params
   useEffect(() => {
@@ -42,12 +44,13 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
         );
         setDeck(parsedDeck);
         setCardIds(parsedDeck.cards.map((card) => card.id));
+        setOwned(user && parsedDeck.user_id === user.id);
       })
       .catch(() =>
         pushError(`Deck with id ${id} does not exist or could not be accessed`)
       )
       .finally(() => setLoading(false));
-  }, [id, cardIds.length]);
+  }, [id, cardIds.length, user]);
 
   // Alert loading while loading, then clear alerts
   useEffect(() => {
@@ -173,6 +176,7 @@ const Deck = ({ pushAlert, clearAlerts, pushError, clearErrors }) => {
             deleteCard={deleteCard}
             clearErrors={clearErrors}
             pushError={pushError}
+            owned={owned}
           />
         </>
       )}

@@ -6,7 +6,14 @@ import {
   GreenButton,
 } from "../styled/ButtonStyledComponents";
 
-const CardButtons = ({ editable, handleToggle, deleteCard, id, formId }) => {
+const CardButtons = ({
+  editable,
+  handleToggle,
+  deleteCard,
+  id,
+  formId,
+  owned,
+}) => {
   return (
     <CornerButtonContainer>
       {editable ? (
@@ -18,12 +25,16 @@ const CardButtons = ({ editable, handleToggle, deleteCard, id, formId }) => {
         </>
       ) : (
         <>
-          <YellowButton type="button" onClick={handleToggle}>
-            Edit
-          </YellowButton>
-          <RedButton type="button" onClick={() => deleteCard(id)}>
-            Delete
-          </RedButton>
+          {owned && (
+            <>
+              <YellowButton type="button" onClick={handleToggle}>
+                Edit
+              </YellowButton>
+              <RedButton type="button" onClick={() => deleteCard(id)}>
+                Delete
+              </RedButton>
+            </>
+          )}
         </>
       )}
     </CornerButtonContainer>
